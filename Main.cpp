@@ -1,7 +1,20 @@
 #include "main.h"
 
 
+
+
+//		GLOBAL VARIABLES
+//
 MainWindow MainWnd = { };
+
+
+
+//		FONTS
+//
+HFONT titlef = CreateFontA(24, 8, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, VARIABLE_PITCH, "Comic Sans MS");
+HFONT textf = CreateFontA(21, 9, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, VARIABLE_PITCH, "Calibri");
+
+
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdshow) {
 
@@ -16,7 +29,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdsho
 
 
 	//CreateWindow(L"MainWndClass", L"My Dumb Program", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 1600, 900, NULL, NULL, NULL, NULL);
-	MainWnd.SetWindow(CreateWindow(L"MainWndClass", L"My Dumb Program 2.0", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, 100, 100, 900, 710, NULL, NULL, NULL, NULL));
+	MainWnd.SetWindow(CreateWindow(L"MainWndClass", L"My Dumb Program 2.0", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, 100, 100, 870, 710, NULL, NULL, NULL, NULL));
 	while (GetMessage(&MainWndMessage, NULL, NULL, NULL)) {
 		TranslateMessage(&MainWndMessage);
 		DispatchMessage(&MainWndMessage);
@@ -71,6 +84,32 @@ LRESULT CALLBACK MainWindow::MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 			break;
 		}
 
+		case WM_PAINT:
+		{
+			RECT r;
+			//HBRUSH hbr;
+			HPEN hpen;
+			HDC hDC;
+			PAINTSTRUCT ps;
+
+			hDC = BeginPaint(hWnd, &ps);
+
+			GetClientRect(hWnd, &r);
+
+			hpen = CreatePen(PS_SOLID, 5, RGB(70, 70, 70));
+			SelectObject(hDC, hpen);
+
+			Rectangle(hDC, 10, 80, 400, 700);
+			Rectangle(hDC, 450, 80, 840, 700);
+
+			EndPaint(hWnd, &ps);
+
+			ReleaseDC(hWnd, hDC);
+			DeleteObject(hpen);
+			//DeleteObject(hbr);
+			break;
+		}
+
 		case WM_CREATE:
 		{
 			MainWnd.AddMenus(hWnd);
@@ -118,8 +157,13 @@ void MainWindow::AddMenus(HWND hWnd)
 void MainWindow::AddWidgets(HWND hWnd)
 {
 	RECT r;
+	UINT y=-30, offset = 30;
 	GetClientRect(hWnd, &r);
-	//CreateWindowA("static", "Предположительно, это: ", WS_CHILD | WS_VISIBLE | SS_CENTER, 10 + 395 + 10, 610 + 10, 395, 40, hWnd, (HMENU)OnClearClicked, NULL, NULL);
+	SendMessageA(CreateWindowA("static", "Лаба 4", WS_CHILD | WS_VISIBLE | SS_CENTER, 0, y+=offset, 850, 40, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
+	SendMessageA(CreateWindowA("static", "Вариант 19", WS_CHILD | WS_VISIBLE | SS_CENTER, 0, y += offset, 850, 40, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
+	y += offset + 23;
+	SendMessageA(CreateWindowA("static", "Задача 1", WS_CHILD | WS_VISIBLE | SS_CENTER, 13, y, 384, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
+	SendMessageA(CreateWindowA("static", "Задача 2", WS_CHILD | WS_VISIBLE | SS_CENTER, 453, y, 384, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
 }
 void MainWindow::SetWindow(HWND _hWnd)
 {

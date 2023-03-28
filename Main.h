@@ -10,6 +10,7 @@
 //		Индексы для лаб
 //
 #define OnIsPalindromClicked 4
+#define OnSSolveClicked 5
 
 class MainWindow
 {

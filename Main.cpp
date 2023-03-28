@@ -1,14 +1,18 @@
 #include "main.h"
 #include "Lab.h"
+using namespace SpecialFunctionsForLabs;
 
 
 
 //		GLOBAL VARIABLES
 //
 MainWindow MainWnd = { };
+char BUFFER[40] = { };
+
 HWND PalindromEdit = { };
 HWND PalindromStatic = { };
-char BUFFER[40] = { };
+HWND SEdit = { };
+HWND SStatic = { };
 
 
 //		FONTS
@@ -86,12 +90,25 @@ LRESULT CALLBACK MainWindow::MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 				//
 				// Лабы
 				//
-				
 				case OnIsPalindromClicked:
 				{
 					GetWindowTextA(PalindromEdit, BUFFER, 40);
-					SetWindowTextA(PalindromStatic, std::to_string(Palindrom(std::string(BUFFER))).c_str());
+					SetWindowTextA(PalindromStatic, string(Palindrom(string(BUFFER))? "Палиндром" : "Не палиндром").c_str());
 					break;
+				}
+
+				case OnSSolveClicked:
+				{
+					GetWindowTextA(SEdit, BUFFER, 40);
+					string str = string(BUFFER);
+					if (!is_natural(str))
+					{
+						MessageBoxA(hWnd, "Значение поля должно быть натуральным целым числом!", "Ошибка ввода!", MB_OK);
+						break;
+					}
+					UINT n = stoi(str);
+					double res = S(n);
+					SetWindowTextA(SStatic, to_string(res).c_str());
 				}
 			}
 			break;
@@ -118,6 +135,7 @@ LRESULT CALLBACK MainWindow::MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 			hpen = CreatePen(PS_DOT, 1, RGB(70, 70, 70));
 			SelectObject(hDC, hpen);
 			DrawLine(hDC, 133, 133, 384, 133);
+			DrawLine(hDC, 453 + 140, 133, 453 + 140 + 234, 133);
 
 			EndPaint(hWnd, &ps);
 
@@ -175,8 +193,6 @@ void MainWindow::AddWidgets(HWND hWnd)
 {
 	RECT r;
 	UINT y=-30, offset = 30;
-	HDC hDC = GetDC(hWnd);
-	HPEN hpen;
 	GetClientRect(hWnd, &r);
 
 	SendMessageA(CreateWindowA("static", "Лаба 4", WS_CHILD | WS_VISIBLE | SS_CENTER, 0, y+=offset, 850, 40, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
@@ -191,17 +207,16 @@ void MainWindow::AddWidgets(HWND hWnd)
 	//
 	CreateWindowA("static", "Введите строку: ", WS_CHILD | WS_VISIBLE, 13, y+=offset, 130, 20, hWnd, NULL, NULL, NULL);
 	PalindromEdit = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE, 130, y, 254, 20, hWnd, NULL, NULL, NULL);
-	
-	hpen = CreatePen(PS_SOLID, 5, RGB(70, 70, 70));
-	SelectObject(hDC, hpen);
-	Rectangle(hDC, 0, y + 20, 600, y + 800);
-
 	CreateWindowA("button", "Вычислить", WS_CHILD | WS_VISIBLE, 50, y+=offset, 130, 20, hWnd, (HMENU)OnIsPalindromClicked, NULL, NULL);
 	PalindromStatic = CreateWindowA("static", "...", WS_CHILD | WS_VISIBLE | SS_CENTER, 220, y, 150, 20, hWnd, NULL, NULL, NULL);
-	
-	
-	ReleaseDC(hWnd, hDC);
-	DeleteObject(hpen);
+	//
+	// Задача 2
+	//
+	CreateWindowA("static", "Введите нат. целое: ", WS_CHILD | WS_VISIBLE, 453, y -= offset, 145, 20, hWnd, NULL, NULL, NULL);
+	SEdit = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE, 453 + 140, y, 234, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("button", "Вычислить", WS_CHILD | WS_VISIBLE, 453 + 50, y += offset, 130, 20, hWnd, (HMENU)OnSSolveClicked, NULL, NULL);
+	SStatic = CreateWindowA("static", "...", WS_CHILD | WS_VISIBLE | SS_CENTER, 453 + 220, y, 150, 20, hWnd, NULL, NULL, NULL);
+
 }
 void MainWindow::SetWindow(HWND _hWnd)
 {

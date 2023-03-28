@@ -6,6 +6,8 @@
 //		GLOBAL VARIABLES
 //
 MainWindow MainWnd = { };
+HWND PalindromEdit = { };
+HWND PalindromStatic = { };
 
 
 
@@ -29,7 +31,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdsho
 
 
 	//CreateWindow(L"MainWndClass", L"My Dumb Program", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 1600, 900, NULL, NULL, NULL, NULL);
-	MainWnd.SetWindow(CreateWindow(L"MainWndClass", L"Лабораторная №4", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, 100, 100, 870, 710, NULL, NULL, NULL, NULL));
+	MainWnd.SetWindow(CreateWindow(L"MainWndClass", L"Лабораторная №4", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, 100, 100, 870, 500, NULL, NULL, NULL, NULL));
 	while (GetMessage(&MainWndMessage, NULL, NULL, NULL)) {
 		TranslateMessage(&MainWndMessage);
 		DispatchMessage(&MainWndMessage);
@@ -99,8 +101,12 @@ LRESULT CALLBACK MainWindow::MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 			hpen = CreatePen(PS_SOLID, 5, RGB(70, 70, 70));
 			SelectObject(hDC, hpen);
 
-			Rectangle(hDC, 10, 80, 400, 637);
-			Rectangle(hDC, 450, 80, 840, 637);
+			Rectangle(hDC, 10, 80, 400, r.bottom - 15);
+			Rectangle(hDC, 450, 80, 840, r.bottom - 15);
+
+			hpen = CreatePen(PS_DOT, 1, RGB(70, 70, 70));
+			SelectObject(hDC, hpen);
+			DrawLine(hDC, 133, 133, 384, 133);
 
 			EndPaint(hWnd, &ps);
 
@@ -158,12 +164,33 @@ void MainWindow::AddWidgets(HWND hWnd)
 {
 	RECT r;
 	UINT y=-30, offset = 30;
+	HDC hDC = GetDC(hWnd);
+	HPEN hpen;
 	GetClientRect(hWnd, &r);
+
 	SendMessageA(CreateWindowA("static", "Лаба 4", WS_CHILD | WS_VISIBLE | SS_CENTER, 0, y+=offset, 850, 40, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
 	SendMessageA(CreateWindowA("static", "Вариант 19", WS_CHILD | WS_VISIBLE | SS_CENTER, 0, y += offset, 850, 40, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
 	y += offset + 23;
 	SendMessageA(CreateWindowA("static", "Задача 1", WS_CHILD | WS_VISIBLE | SS_CENTER, 13, y, 384, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
 	SendMessageA(CreateWindowA("static", "Задача 2", WS_CHILD | WS_VISIBLE | SS_CENTER, 453, y, 384, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
+
+	// Дальше идет реализация лабы
+	//
+	// Задача 1
+	//
+	CreateWindowA("static", "Введите строку: ", WS_CHILD | WS_VISIBLE, 13, y+=offset, 130, 20, hWnd, NULL, NULL, NULL);
+	PalindromEdit = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE, 130, y, 254, 20, hWnd, NULL, NULL, NULL);
+	
+	hpen = CreatePen(PS_SOLID, 5, RGB(70, 70, 70));
+	SelectObject(hDC, hpen);
+	Rectangle(hDC, 0, y + 20, 600, y + 800);
+
+	CreateWindowA("button", "Вычислить", WS_CHILD | WS_VISIBLE, 50, y+=offset, 130, 20, hWnd, (HMENU)OnIsPalindromClicked, NULL, NULL);
+	PalindromStatic = CreateWindowA("static", "...", WS_CHILD | WS_VISIBLE | SS_CENTER, 220, y, 150, 20, hWnd, NULL, NULL, NULL);
+	
+	
+	ReleaseDC(hWnd, hDC);
+	DeleteObject(hpen);
 }
 void MainWindow::SetWindow(HWND _hWnd)
 {
@@ -172,4 +199,11 @@ void MainWindow::SetWindow(HWND _hWnd)
 HWND MainWindow::GetWindow()
 {
 	return hWnd;
+}
+BOOL DrawLine(HDC hdc, int x1, int y1, int x2, int y2) {
+	// т.к. WinAPI не предлагает функцию для рисования линии от
+	// точки до точки, а LineTo принимает конечную позицию от текущей,
+	// заданной MoveToEx(), напишем свою функцию:
+	MoveToEx(hdc, x1, y1, NULL);
+	return LineTo(hdc, x2, y2);
 }

@@ -109,6 +109,7 @@ LRESULT CALLBACK MainWindow::MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 					UINT n = stoi(str);
 					double res = S(n);
 					SetWindowTextA(SStatic, dtos(res).c_str());
+					break;
 				}
 			}
 			break;

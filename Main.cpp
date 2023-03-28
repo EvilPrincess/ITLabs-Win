@@ -1,5 +1,5 @@
 #include "main.h"
-
+#include "Lab.h"
 
 
 
@@ -8,7 +8,7 @@
 MainWindow MainWnd = { };
 HWND PalindromEdit = { };
 HWND PalindromStatic = { };
-
+char BUFFER[40] = { };
 
 
 //		FONTS
@@ -80,6 +80,17 @@ LRESULT CALLBACK MainWindow::MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 				case OnGitSourceClicked:
 				{
 					ShellExecute(0, 0, L"https://github.com/EvilPrincess/ITLabs-Win.git", 0, 0, SW_SHOW);
+					break;
+				}
+
+				//
+				// Лабы
+				//
+				
+				case OnIsPalindromClicked:
+				{
+					GetWindowTextA(PalindromEdit, BUFFER, 40);
+					SetWindowTextA(PalindromStatic, std::to_string(Palindrom(std::string(BUFFER))).c_str());
 					break;
 				}
 			}

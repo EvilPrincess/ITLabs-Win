@@ -4,6 +4,8 @@
 
 #define OnExitClicked 0
 #define OnClearAllClicked 1
+#define OnInfoClicked 2
+#define OnGitSourceClicked 3
 
 class MainWindow
 {

@@ -55,6 +55,18 @@ LRESULT CALLBACK MainWindow::MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 					PostQuitMessage(0);
 					break;
 				}
+
+				case OnInfoClicked:
+				{
+					MessageBoxA(hWnd, "Простое оконное приложения для реализации лаб многоуважаемой Аси Михайловны в этом формате.", "Справка", MB_OK);
+					break;
+				}
+
+				case OnGitSourceClicked:
+				{
+					ShellExecute(0, 0, L"https://github.com/EvilPrincess/ITLabs-Win.git", 0, 0, SW_SHOW);
+					break;
+				}
 			}
 			break;
 		}
@@ -97,8 +109,8 @@ void MainWindow::AddMenus(HWND hWnd)
 
 	AppendMenu(RootMenu, MF_POPUP, (UINT_PTR)WhatMenu, L"ЧаВо");
 
-	/*AppendMenu(WhatMenu, MF_STRING, OnInfoClicked, L"Справка");
-	AppendMenu(WhatMenu, MF_STRING, OnGitSourceClicked, L"Git Source");*/
+	AppendMenu(WhatMenu, MF_STRING, OnInfoClicked, L"Справка");
+	AppendMenu(WhatMenu, MF_STRING, OnGitSourceClicked, L"Git Source");
 
 
 	SetMenu(hWnd, RootMenu);

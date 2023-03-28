@@ -45,11 +45,27 @@ bool SpecialFunctionsForLabs::is_natural(string str)
 {
     char availables[]{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
-    if (!is_int(str) || stoi(str) < 1) return false;
+    if (str.length() < 1 || !is_int(str) || stoi(str) < 1) return false;
 
     return true;
 }
 bool SpecialFunctionsForLabs::is_char(string str)
 {
     return str.length() == 1;
+}
+double SpecialFunctionsForLabs::round(double value, unsigned int precision)
+{
+    double k = pow(10, precision);
+    return (int)(value * k + 0.5) / k;
+}
+string SpecialFunctionsForLabs::dtos(double value, unsigned int absolutePresision)
+{
+    string str = to_string(value);
+    unsigned int precision = min(absolutePresision, str.length());
+    for (int i = precision; i > 1; i--)
+    {
+        if (str[i] == '0') precision--;
+        else break;
+    }
+    return str.substr(0, precision+1);
 }

@@ -65,7 +65,10 @@ LRESULT CALLBACK MainWindow::MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 			{
 				case OnClearAllClicked:
 				{
-					// TODO:
+					SetWindowTextA(PalindromEdit, "");
+					SetWindowTextA(PalindromStatic, "");
+					SetWindowTextA(SEdit, "");
+					SetWindowTextA(SStatic, "");
 					break;
 				}
 

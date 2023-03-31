@@ -40,7 +40,7 @@ bool SpecialFunctionsForLabs::is_double(string str)
 	if (count(str.begin(), str.end(), '.') > 1) return false;
 	if (count(str.begin(), str.end(), '.') > 0 && (str[0] == '.' || str[0] == '-' && str[1] == '.' || str.back() == '.')) return false;
 
-	if (str.substr(0, *find(str.begin(), str.end(), '.')).length() > 9 || str.substr(*find(str.begin(), str.end(), '.'), str.length() - 1).length() > 15);
+	if (str.substr(0, str.find('.')).length() > 9 || str.substr(str.find('.'), str.length() - 1).length() > 15);
 
 	for (char c : str) {
 		if (find(begin(availables), end(availables), c) == end(availables)) return false;

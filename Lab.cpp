@@ -50,7 +50,7 @@ bool SpecialFunctionsForLabs::is_double(string str)
 }
 bool SpecialFunctionsForLabs::is_natural(string str)
 {
-	return (is_int(str) && stoi(str) < 1);
+	return (is_int(str) && stoi(str) > 0);
 }
 bool SpecialFunctionsForLabs::is_char(string str)
 {

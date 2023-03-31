@@ -64,7 +64,7 @@ double SpecialFunctionsForLabs::round(double value, unsigned int precision)
 string SpecialFunctionsForLabs::dtos(double value, unsigned int absolutePresision)
 {
     string str = to_string(value);
-    unsigned int precision = min(absolutePresision, str.length());
+    unsigned int precision = min(absolutePresision + str.find('.'), str.length());
     for (int i = precision; i > 1; i--)
     {
         if (str[i] == '0') precision--;

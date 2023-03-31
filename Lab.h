@@ -15,7 +15,7 @@ namespace SpecialFunctionsForLabs {
 	bool is_double(string str);
 	bool is_char(string str);
 	bool is_natural(string str);
-	string dtos(double value, unsigned int absolutePresision = 4);
+	string dtos(double value, unsigned int absolutePresision = 2);
 	double round(double value, unsigned int precision);
 
 	template<typename T>

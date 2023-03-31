@@ -14,44 +14,47 @@ double S(unsigned int n)
 
 bool SpecialFunctionsForLabs::is_int(string str)
 {
-    char availables[]{ '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+	char availables[]{ '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
-    if (count(str.begin(), str.end(), '-') > 0 && str[0] != '-') return false;
-    if (count(str.begin(), str.end(), '-') > 1) return false;
+	if (str.length() < 1) return false;
+	if (str.length() > 9) return false;
 
-    for (char c : str) {
-        if (find(begin(availables), end(availables), c) == end(availables)) return false;
-    }
+	if (count(str.begin(), str.end(), '-') > 0 && str[0] != '-') return false;
+	if (count(str.begin(), str.end(), '-') > 1) return false;
 
-    return true;
+	for (char c : str) {
+		if (find(begin(availables), end(availables), c) == end(availables)) return false;
+	}
+
+	return true;
 }
-bool SpecialFunctionsForLabs::is_float(string str)
+bool SpecialFunctionsForLabs::is_double(string str)
 {
-    char availables[]{ '-', '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+	char availables[]{ '-', '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
-    if (count(str.begin(), str.end(), '-') > 0 && str[0] != '-') return false;
-    if (count(str.begin(), str.end(), '-') > 1) return false;
+	if (str.length() < 1) return false;
 
-    if (count(str.begin(), str.end(), '.') > 1) return false;
-    if (count(str.begin(), str.end(), '.') > 0 && (str[0] == '.' || str[0] == '-' && str[1] == '.' || str.back() == '.')) return false;
+	if (count(str.begin(), str.end(), '-') > 0 && str[0] != '-') return false;
+	if (count(str.begin(), str.end(), '-') > 1) return false;
 
-    for (char c : str) {
-        if (find(begin(availables), end(availables), c) == end(availables)) return false;
-    }
+	if (count(str.begin(), str.end(), '.') > 1) return false;
+	if (count(str.begin(), str.end(), '.') > 0 && (str[0] == '.' || str[0] == '-' && str[1] == '.' || str.back() == '.')) return false;
 
-    return true;
+	if (str.substr(0, *find(str.begin(), str.end(), '.')).length() > 9 || str.substr(*find(str.begin(), str.end(), '.'), str.length() - 1).length() > 15);
+
+	for (char c : str) {
+		if (find(begin(availables), end(availables), c) == end(availables)) return false;
+	}
+
+	return true;
 }
 bool SpecialFunctionsForLabs::is_natural(string str)
 {
-    char availables[]{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-
-    if (str.length() < 1 || !is_int(str) || stoi(str) < 1) return false;
-
-    return true;
+	return (is_int(str) && stoi(str) < 1);
 }
 bool SpecialFunctionsForLabs::is_char(string str)
 {
-    return str.length() == 1;
+	return (str.length() == 1);
 }
 double SpecialFunctionsForLabs::round(double value, unsigned int precision)
 {

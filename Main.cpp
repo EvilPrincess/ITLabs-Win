@@ -66,9 +66,9 @@ LRESULT CALLBACK MainWindow::MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 				case OnClearAllClicked:
 				{
 					SetWindowTextA(PalindromEdit, "");
-					SetWindowTextA(PalindromStatic, "");
+					SetWindowTextA(PalindromStatic, "...");
 					SetWindowTextA(SEdit, "");
-					SetWindowTextA(SStatic, "");
+					SetWindowTextA(SStatic, "...");
 					break;
 				}
 
@@ -121,31 +121,38 @@ LRESULT CALLBACK MainWindow::MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 		case WM_PAINT:
 		{
 			RECT r;
-			//HBRUSH hbr;
 			HPEN hpen;
-			HDC hDC;
+			HDC hDC, mDC;
+			HBITMAP mBM;
 			PAINTSTRUCT ps;
-
-			hDC = BeginPaint(hWnd, &ps);
 
 			GetClientRect(hWnd, &r);
 
-			hpen = CreatePen(PS_SOLID, 5, RGB(70, 70, 70));
-			SelectObject(hDC, hpen);
+			hDC = BeginPaint(hWnd, &ps);
+			mDC = CreateCompatibleDC(hDC);
+			mBM = CreateCompatibleBitmap(hDC, r.right, r.bottom);
+			SelectObject(mDC, mBM);
 
-			Rectangle(hDC, 10, 80, 400, r.bottom - 15);
-			Rectangle(hDC, 450, 80, 840, r.bottom - 15);
+			hpen = CreatePen(PS_SOLID, 5, RGB(70, 70, 70));
+			SelectObject(mDC, hpen);
+
+			SelectObject(mDC, GetStockObject(WHITE_BRUSH));
+			Rectangle(mDC, 0, 0, r.right, r.bottom);
+			Rectangle(mDC, 10, 80, 400, r.bottom - 15);
+			Rectangle(mDC, 450, 80, 840, r.bottom - 15);
 
 			hpen = CreatePen(PS_DOT, 1, RGB(70, 70, 70));
-			SelectObject(hDC, hpen);
-			DrawLine(hDC, 133, 133, 384, 133);
-			DrawLine(hDC, 453 + 140, 133, 453 + 140 + 234, 133);
+			SelectObject(mDC, hpen);
+			DrawLine(mDC, 133, 133, 384, 133);
+			DrawLine(mDC, 453 + 140, 133, 453 + 140 + 234, 133);
+
+			BitBlt(hDC, 0, 0, r.right, r.bottom, mDC, 0, 0, SRCCOPY);
 
 			EndPaint(hWnd, &ps);
 
-			ReleaseDC(hWnd, hDC);
+			DeleteDC(mDC);
+			DeleteObject(mBM);
 			DeleteObject(hpen);
-			//DeleteObject(hbr);
 			break;
 		}
 
@@ -199,8 +206,8 @@ void MainWindow::AddWidgets(HWND hWnd)
 	UINT y=-30, offset = 30;
 	GetClientRect(hWnd, &r);
 
-	SendMessageA(CreateWindowA("static", "Лаба 4", WS_CHILD | WS_VISIBLE | SS_CENTER, 0, y+=offset, 850, 40, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
-	SendMessageA(CreateWindowA("static", "Вариант 19", WS_CHILD | WS_VISIBLE | SS_CENTER, 0, y += offset, 850, 40, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
+	SendMessageA(CreateWindowA("static", "Лаба 4", WS_CHILD | WS_VISIBLE | SS_CENTER, 3, y+=offset+3, 847, 40, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
+	SendMessageA(CreateWindowA("static", "Вариант 19", WS_CHILD | WS_VISIBLE | SS_CENTER, 3, y += offset, 847, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
 	y += offset + 23;
 	SendMessageA(CreateWindowA("static", "Задача 1", WS_CHILD | WS_VISIBLE | SS_CENTER, 13, y, 384, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
 	SendMessageA(CreateWindowA("static", "Задача 2", WS_CHILD | WS_VISIBLE | SS_CENTER, 453, y, 384, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);

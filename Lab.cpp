@@ -14,8 +14,6 @@ double S(unsigned int n)
 
 bool SpecialFunctionsForLabs::is_int(string str)
 {
-	char availables[]{ '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-
 	if (str.length() < 1) return false;
 	if (str.length() > 9) return false;
 
@@ -23,15 +21,13 @@ bool SpecialFunctionsForLabs::is_int(string str)
 	if (count(str.begin(), str.end(), '-') > 1) return false;
 
 	for (char c : str) {
-		if (find(begin(availables), end(availables), c) == end(availables)) return false;
+		if (!('0' <= c && c <= '9' || c == '-')) return false;
 	}
 
 	return true;
 }
 bool SpecialFunctionsForLabs::is_double(string str)
 {
-	char availables[]{ '-', '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-
 	if (str.length() < 1) return false;
 
 	if (count(str.begin(), str.end(), '-') > 0 && str[0] != '-') return false;
@@ -43,7 +39,7 @@ bool SpecialFunctionsForLabs::is_double(string str)
 	if (str.substr(0, str.find('.')).length() > 9 || str.substr(str.find('.'), str.length() - 1).length() > 15);
 
 	for (char c : str) {
-		if (find(begin(availables), end(availables), c) == end(availables)) return false;
+		if (!('0' <= c && c <= '9' || c == '-' || c == '.')) return false;
 	}
 
 	return true;

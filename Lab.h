@@ -1,14 +1,36 @@
 #pragma once
 
 #include "base.h"
+#include "Time.h"
 
 #define max(a, b) (a >= b? a : b)
 #define min(a, b) (a <= b? a : b)
 
 using namespace std;
 
+//		ËÀÁÀ 4
+//
 BOOL Palindrom(string _Str);
 double S(unsigned int n);
+
+//		ËÀÁÀ 5
+//
+struct TRAIN
+{
+	string NAZN;
+	UINT NUMR;
+	TS TIME;
+};
+struct FIO
+{
+	string surname, name, otchestvo;
+} static const myFIO{"Ôîìèí", "Íèêèòà", "Àëåêñååâè÷"};
+struct Player
+{
+	string origin, team;
+	FIO fio;
+	UINT num, age, height, weight;
+};
 
 namespace SpecialFunctionsForLabs {
 	bool is_int(string str);

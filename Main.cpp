@@ -1,5 +1,6 @@
 #include "main.h"
 #include "Lab.h"
+#include "Time.h"
 using namespace SpecialFunctionsForLabs;
 
 
@@ -61,60 +62,7 @@ LRESULT CALLBACK MainWindow::MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 	{
 		case WM_COMMAND:
 		{
-			switch (wParam)
-			{
-				case OnClearAllClicked:
-				{
-					SetWindowTextA(PalindromEdit, "");
-					SetWindowTextA(PalindromStatic, "...");
-					SetWindowTextA(SEdit, "");
-					SetWindowTextA(SStatic, "...");
-					break;
-				}
-
-				case OnExitClicked:
-				{
-					PostQuitMessage(0);
-					break;
-				}
-
-				case OnInfoClicked:
-				{
-					MessageBoxA(hWnd, "Донской Государственный Технический Университет\nФакультет: ИиВТ\nКафедра: ПОВТиАС (09.03.04)\nГруппа: ВПР12\nСтудент: Фомин Н. А.\n\nПростое оконное приложение для реализации лаб Аси Михайловны.", "Справка", MB_OK);
-					break;
-				}
-
-				case OnGitSourceClicked:
-				{
-					ShellExecute(0, 0, L"https://github.com/EvilPrincess/ITLabs-Win.git", 0, 0, SW_SHOW);
-					break;
-				}
-
-				//
-				// Лабы
-				//
-				case OnIsPalindromClicked:
-				{
-					GetWindowTextA(PalindromEdit, BUFFER, 40);
-					SetWindowTextA(PalindromStatic, string(Palindrom(string(BUFFER))? "Палиндром" : "Не палиндром").c_str());
-					break;
-				}
-
-				case OnSSolveClicked:
-				{
-					GetWindowTextA(SEdit, BUFFER, 40);
-					string str = string(BUFFER);
-					if (!is_natural(str))
-					{
-						MessageBoxA(hWnd, "Значение поля должно быть натуральным целым числом!", "Ошибка ввода!", MB_OK);
-						break;
-					}
-					UINT n = stoi(str);
-					double res = S(n);
-					SetWindowTextA(SStatic, dtos(res).c_str());
-					break;
-				}
-			}
+			MainWnd.CommandHandler(hWnd, uMsg, wParam, lParam);
 			break;
 		}
 
@@ -243,4 +191,61 @@ BOOL DrawLine(HDC hdc, int x1, int y1, int x2, int y2) {
 	// заданной MoveToEx(), напишем свою функцию:
 	MoveToEx(hdc, x1, y1, NULL);
 	return LineTo(hdc, x2, y2);
+}
+void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	switch (wParam)
+	{
+	case OnClearAllClicked:
+	{
+		SetWindowTextA(PalindromEdit, "");
+		SetWindowTextA(PalindromStatic, "...");
+		SetWindowTextA(SEdit, "");
+		SetWindowTextA(SStatic, "...");
+		break;
+	}
+
+	case OnExitClicked:
+	{
+		PostQuitMessage(0);
+		break;
+	}
+
+	case OnInfoClicked:
+	{
+		MessageBoxA(hWnd, "Донской Государственный Технический Университет\nФакультет: ИиВТ\nКафедра: ПОВТиАС (09.03.04)\nГруппа: ВПР12\nСтудент: Фомин Н. А.\n\nПростое оконное приложение для реализации лаб Аси Михайловны.", "Справка", MB_OK);
+		break;
+	}
+
+	case OnGitSourceClicked:
+	{
+		ShellExecute(0, 0, L"https://github.com/EvilPrincess/ITLabs-Win.git", 0, 0, SW_SHOW);
+		break;
+	}
+
+	//
+	// Лабы
+	//
+	case OnIsPalindromClicked:
+	{
+		GetWindowTextA(PalindromEdit, BUFFER, 40);
+		SetWindowTextA(PalindromStatic, string(Palindrom(string(BUFFER)) ? "Палиндром" : "Не палиндром").c_str());
+		break;
+	}
+
+	case OnSSolveClicked:
+	{
+		GetWindowTextA(SEdit, BUFFER, 40);
+		string str = string(BUFFER);
+		if (!is_natural(str))
+		{
+			MessageBoxA(hWnd, "Значение поля должно быть натуральным целым числом!", "Ошибка ввода!", MB_OK);
+			break;
+		}
+		UINT n = stoi(str);
+		double res = S(n);
+		SetWindowTextA(SStatic, dtos(res).c_str());
+		break;
+	}
+	}
 }

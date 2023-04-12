@@ -136,6 +136,7 @@
     <ClInclude Include="Lab.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Time.h" />
+    <ClInclude Include="WndStruct.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,13 +7,8 @@ using namespace SpecialFunctionsForLabs;
 
 //		GLOBAL VARIABLES
 //
-MainWindow MainWnd = { };
+MainWindow MainInst = { };
 char BUFFER[40] = { };
-
-HWND PalindromEdit = { };
-HWND PalindromStatic = { };
-HWND SEdit = { };
-HWND SStatic = { };
 
 
 //		FONTS
@@ -36,7 +31,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdsho
 
 
 	//CreateWindow(L"MainWndClass", L"My Dumb Program", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 1600, 900, NULL, NULL, NULL, NULL);
-	MainWnd.SetWindow(CreateWindow(L"MainWndClass", L"Лабораторная №4", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, 100, 100, 870, 300, NULL, NULL, NULL, NULL));
+	MainInst.SetWindow(CreateWindow(L"MainWndClass", L"Лабораторная №4", 
+		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | 
+		WS_VISIBLE, 100, 100, 870, 600, NULL, NULL, NULL, NULL));
 	while (GetMessage(&MainWndMessage, NULL, NULL, NULL)) {
 		TranslateMessage(&MainWndMessage);
 		DispatchMessage(&MainWndMessage);
@@ -62,52 +59,13 @@ LRESULT CALLBACK MainWindow::MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 	{
 		case WM_COMMAND:
 		{
-			MainWnd.CommandHandler(hWnd, uMsg, wParam, lParam);
-			break;
-		}
-
-		case WM_PAINT:
-		{
-			RECT r;
-			HPEN hpen;
-			HDC hDC, mDC;
-			HBITMAP mBM;
-			PAINTSTRUCT ps;
-
-			GetClientRect(hWnd, &r);
-
-			hDC = BeginPaint(hWnd, &ps);
-			mDC = CreateCompatibleDC(hDC);
-			mBM = CreateCompatibleBitmap(hDC, r.right, r.bottom);
-			SelectObject(mDC, mBM);
-
-			hpen = CreatePen(PS_SOLID, 5, RGB(70, 70, 70));
-			SelectObject(mDC, hpen);
-
-			SelectObject(mDC, GetStockObject(WHITE_BRUSH));
-			Rectangle(mDC, 0, 0, r.right, r.bottom);
-			Rectangle(mDC, 10, 80, 400, r.bottom - 15);
-			Rectangle(mDC, 450, 80, 840, r.bottom - 15);
-
-			hpen = CreatePen(PS_DOT, 1, RGB(70, 70, 70));
-			SelectObject(mDC, hpen);
-			DrawLine(mDC, 133, 133, 384, 133);
-			DrawLine(mDC, 453 + 140, 133, 453 + 140 + 234, 133);
-
-			BitBlt(hDC, 0, 0, r.right, r.bottom, mDC, 0, 0, SRCCOPY);
-
-			EndPaint(hWnd, &ps);
-
-			DeleteDC(mDC);
-			DeleteObject(mBM);
-			DeleteObject(hpen);
+			MainInst.CommandHandler(hWnd, uMsg, wParam, lParam);
 			break;
 		}
 
 		case WM_CREATE:
 		{
-			MainWnd.AddMenus(hWnd);
-			MainWnd.AddWidgets(hWnd);
+			MainInst.OnCreated(hWnd);
 			break;
 		}
 
@@ -154,7 +112,7 @@ void MainWindow::AddWidgets(HWND hWnd)
 	UINT y=-30, offset = 30;
 	GetClientRect(hWnd, &r);
 
-	SendMessageA(CreateWindowA("static", "Лаба 4", WS_CHILD | WS_VISIBLE | SS_CENTER, 3, y+=offset+3, 847, 40, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
+	SendMessageA(CreateWindowA("static", "Лаба 5", WS_CHILD | WS_VISIBLE | SS_CENTER, 3, y+=offset+3, 847, 40, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
 	SendMessageA(CreateWindowA("static", "Вариант 19", WS_CHILD | WS_VISIBLE | SS_CENTER, 3, y += offset, 847, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
 	y += offset + 23;
 	SendMessageA(CreateWindowA("static", "Задача 1", WS_CHILD | WS_VISIBLE | SS_CENTER, 13, y, 384, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
@@ -164,17 +122,11 @@ void MainWindow::AddWidgets(HWND hWnd)
 	//
 	// Задача 1
 	//
-	CreateWindowA("static", "Введите строку: ", WS_CHILD | WS_VISIBLE, 13, y+=offset, 130, 20, hWnd, NULL, NULL, NULL);
-	PalindromEdit = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE, 130, y, 254, 20, hWnd, NULL, NULL, NULL);
-	CreateWindowA("button", "Вычислить", WS_CHILD | WS_VISIBLE, 50, y+=offset, 130, 20, hWnd, (HMENU)OnIsPalindromClicked, NULL, NULL);
-	PalindromStatic = CreateWindowA("static", "...", WS_CHILD | WS_VISIBLE | SS_CENTER, 220, y, 150, 20, hWnd, NULL, NULL, NULL);
+	
 	//
 	// Задача 2
 	//
-	CreateWindowA("static", "Введите нат. целое: ", WS_CHILD | WS_VISIBLE, 453, y -= offset, 145, 20, hWnd, NULL, NULL, NULL);
-	SEdit = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE, 453 + 140, y, 234, 20, hWnd, NULL, NULL, NULL);
-	CreateWindowA("button", "Вычислить", WS_CHILD | WS_VISIBLE, 453 + 50, y += offset, 130, 20, hWnd, (HMENU)OnSSolveClicked, NULL, NULL);
-	SStatic = CreateWindowA("static", "...", WS_CHILD | WS_VISIBLE | SS_CENTER, 453 + 220, y, 150, 20, hWnd, NULL, NULL, NULL);
+	
 
 }
 void MainWindow::SetWindow(HWND _hWnd)
@@ -196,56 +148,49 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 {
 	switch (wParam)
 	{
-	case OnClearAllClicked:
-	{
-		SetWindowTextA(PalindromEdit, "");
-		SetWindowTextA(PalindromStatic, "...");
-		SetWindowTextA(SEdit, "");
-		SetWindowTextA(SStatic, "...");
-		break;
-	}
-
-	case OnExitClicked:
-	{
-		PostQuitMessage(0);
-		break;
-	}
-
-	case OnInfoClicked:
-	{
-		MessageBoxA(hWnd, "Донской Государственный Технический Университет\nФакультет: ИиВТ\nКафедра: ПОВТиАС (09.03.04)\nГруппа: ВПР12\nСтудент: Фомин Н. А.\n\nПростое оконное приложение для реализации лаб Аси Михайловны.", "Справка", MB_OK);
-		break;
-	}
-
-	case OnGitSourceClicked:
-	{
-		ShellExecute(0, 0, L"https://github.com/EvilPrincess/ITLabs-Win.git", 0, 0, SW_SHOW);
-		break;
-	}
-
-	//
-	// Лабы
-	//
-	case OnIsPalindromClicked:
-	{
-		GetWindowTextA(PalindromEdit, BUFFER, 40);
-		SetWindowTextA(PalindromStatic, string(Palindrom(string(BUFFER)) ? "Палиндром" : "Не палиндром").c_str());
-		break;
-	}
-
-	case OnSSolveClicked:
-	{
-		GetWindowTextA(SEdit, BUFFER, 40);
-		string str = string(BUFFER);
-		if (!is_natural(str))
+		case OnClearAllClicked:
 		{
-			MessageBoxA(hWnd, "Значение поля должно быть натуральным целым числом!", "Ошибка ввода!", MB_OK);
+			// TODO CLEAR
 			break;
 		}
-		UINT n = stoi(str);
-		double res = S(n);
-		SetWindowTextA(SStatic, dtos(res).c_str());
-		break;
+
+		case OnExitClicked:
+		{
+			PostQuitMessage(0);
+			break;
+		}
+
+		case OnInfoClicked:
+		{
+			MessageBoxA(hWnd, "Донской Государственный Технический Университет\nФакультет: ИиВТ\nКафедра: ПОВТиАС (09.03.04)\nГруппа: ВПР12\nСтудент: Фомин Н. А.\n\nПростое оконное приложение для реализации лаб Аси Михайловны.", "Справка", MB_OK);
+			break;
+		}
+
+		case OnGitSourceClicked:
+		{
+			ShellExecute(0, 0, L"https://github.com/EvilPrincess/ITLabs-Win.git", 0, 0, SW_SHOW);
+			break;
+		}
+
+		//
+		// Лабы
+		//
+		
 	}
-	}
+}
+void MainWindow::Redraw(HWND hWnd)
+{
+	RECT r;
+	HDC hDC;
+
+	GetClientRect(hWnd, &r);
+
+	hDC = GetDC(hWnd);
+
+	ReleaseDC(hWnd, hDC);
+}
+void MainWindow::OnCreated(HWND hWnd)
+{
+	MainInst.AddMenus(hWnd);
+	MainInst.AddWidgets(hWnd);
 }

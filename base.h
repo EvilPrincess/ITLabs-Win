@@ -6,3 +6,4 @@
 #include <string>
 #include <shellapi.h>
 #include <iostream>
+#include <tchar.h>

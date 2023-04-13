@@ -13,6 +13,8 @@ HWND NewBtn1 = { };
 HWND NewBtn2 = { };
 HWND SolveBtn1 = { };
 HWND SolveBtn2 = { };
+HWND Output1 = { };
+HWND Output2 = { };
 
 
 //		FONTS
@@ -37,7 +39,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdsho
 	//CreateWindow(L"MainWndClass", L"My Dumb Program", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 1600, 900, NULL, NULL, NULL, NULL);
 	MainInst.SetWindow(CreateWindow(L"MainWndClass", L"Лабораторная №4", 
 		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | 
-		WS_VISIBLE, 100, 100, 870, 600, NULL, NULL, NULL, NULL));
+		WS_VISIBLE, 100, 100, 1600, 600, NULL, NULL, NULL, NULL));
 	while (GetMessage(&MainWndMessage, NULL, NULL, NULL)) {
 		TranslateMessage(&MainWndMessage);
 		DispatchMessage(&MainWndMessage);
@@ -116,11 +118,11 @@ void MainWindow::AddWidgets(HWND hWnd)
 	UINT y=-30, offset = 30;
 	GetClientRect(hWnd, &r);
 
-	SendMessageA(CreateWindowA("static", "Лаба 5", WS_CHILD | WS_VISIBLE | SS_CENTER, 3, y+=offset+3, 847, 40, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
-	SendMessageA(CreateWindowA("static", "Вариант 19", WS_CHILD | WS_VISIBLE | SS_CENTER, 3, y += offset, 847, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
+	SendMessageA(CreateWindowA("static", "Лаба 5", WS_CHILD | WS_VISIBLE | SS_CENTER, r.right / 4 - 100, y+=offset+3, 847, 40, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
+	SendMessageA(CreateWindowA("static", "Вариант 19", WS_CHILD | WS_VISIBLE | SS_CENTER, r.right / 4 - 100, y += offset, 847, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
 	y += offset + 23;
 	SendMessageA(CreateWindowA("static", "Задача 1", WS_CHILD | WS_VISIBLE | SS_CENTER, 13, y, 384, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
-	SendMessageA(CreateWindowA("static", "Задача 2", WS_CHILD | WS_VISIBLE | SS_CENTER, 453, y, 384, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
+	SendMessageA(CreateWindowA("static", "Задача 2", WS_CHILD | WS_VISIBLE | SS_CENTER, r.right - 453, y, 384, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
 
 	// Дальше идет реализация лабы
 	//
@@ -128,7 +130,8 @@ void MainWindow::AddWidgets(HWND hWnd)
 	//
 	NewBtn1 = CreateWindowA("button", "Добавить запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		10, y+=offset, 140, 20, hWnd, (HMENU)OnNewLinePressed1, NULL, NULL);
-	
+	NewBtn1 = CreateWindowA("button", "Добавить запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - 453, y, 140, 20, hWnd, (HMENU)OnNewLinePressed1, NULL, NULL);
 	//
 	// Задача 2
 	//

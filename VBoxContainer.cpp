@@ -16,7 +16,7 @@ void VBoxContainer::VBoxUnregister()
 	UnregisterClass(VBOXCONT_WC, NULL);
 }
 
-LRESULT CALLBACK VBoxProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK VBoxContainer::VBoxProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg)
 	{

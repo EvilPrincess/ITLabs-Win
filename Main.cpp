@@ -125,9 +125,9 @@ void MainWindow::AddMenus(HWND hWnd)
 }
 void MainWindow::AddWidgets(HWND hWnd)
 {
-	UINT y=-30, offset = 30;
+	UINT y = -30, offset = 30;
 
-	SendMessageA(CreateWindowA("static", "Лаба 5", WS_CHILD | WS_VISIBLE | SS_CENTER, r.right / 4 - 100, y+=offset+3, 847, 40, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
+	SendMessageA(CreateWindowA("static", "Лаба 5", WS_CHILD | WS_VISIBLE | SS_CENTER, r.right / 4 - 100, y += offset + 3, 847, 40, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
 	SendMessageA(CreateWindowA("static", "Вариант 19", WS_CHILD | WS_VISIBLE | SS_CENTER, r.right / 4 - 100, y += offset, 847, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
 	y += offset + 23;
 	SendMessageA(CreateWindowA("static", "Задача 1", WS_CHILD | WS_VISIBLE | SS_CENTER, 13, y, 384, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
@@ -135,10 +135,10 @@ void MainWindow::AddWidgets(HWND hWnd)
 
 	// Дальше идет реализация лабы
 	NewBtn1 = CreateWindowA("button", "Добавить запись (максимум 10)", WS_CHILD | WS_VISIBLE | SS_CENTER,
-		10, y+=offset, 240, 20, hWnd, (HMENU)OnNewLinePressed1, NULL, NULL);
+		10, y += offset, 240, 20, hWnd, (HMENU)OnNewLinePressed1, NULL, NULL);
 	NewBtn2 = CreateWindowA("button", "Добавить запись (максимум 10)", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		r.right - 453, y, 240, 20, hWnd, (HMENU)OnNewLinePressed2, NULL, NULL);
-	tly = ply = y+=offset;
+	tly = ply = y += offset;
 	// заголовок таблицы 1
 	CreateWindowA("static", "Пункт назначения", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		10, y, 140, 20, hWnd, NULL, NULL, NULL);
@@ -150,7 +150,7 @@ void MainWindow::AddWidgets(HWND hWnd)
 	CreateWindowA("static", "Вес", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		r.right - (90), y, 80, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Рост", WS_CHILD | WS_VISIBLE | SS_CENTER,
-		r.right - (90  * 2), y, 80, 20, hWnd, NULL, NULL, NULL);
+		r.right - (90 * 2), y, 80, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Возраст", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		r.right - (90 * 3), y, 80, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Номер", WS_CHILD | WS_VISIBLE | SS_CENTER,
@@ -165,6 +165,13 @@ void MainWindow::AddWidgets(HWND hWnd)
 		r.right - (90 * 4 + 150 * 4), y, 140, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Страна", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		r.right - (90 * 4 + 150 * 5), y, 140, 20, hWnd, NULL, NULL, NULL);
+
+	CreateWindowA("static", "Номер", WS_CHILD | WS_VISIBLE | WS_BORDER | SS_CENTER,
+		10, r.bottom - 200, 100, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | WS_BORDER | SS_CENTER,
+		10 + 140 + 10, r.bottom - 200, 140, 20, hWnd, (HMENU)EditNum1, NULL, NULL);
+	CreateWindowA("button", "Найти запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		10 + 150 + 150, r.bottom - 200, 140, 20, hWnd, (HMENU)Solve1, NULL, NULL);
 }
 void MainWindow::SetWindow(HWND _hWnd)
 {

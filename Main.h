@@ -15,6 +15,7 @@
 #define Solve2 7
 #define DeleteLine1 8
 #define DeleteLine2 9
+#define EditNum1 10
 
 class MainWindow
 {

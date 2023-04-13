@@ -8,6 +8,7 @@ using namespace SpecialFunctionsForLabs;
 //		GLOBAL VARIABLES
 //
 MainWindow MainInst = { };
+RECT r;
 char BUFFER[40] = { };
 HWND MainWnd = { };
 HWND NewBtn1 = { };
@@ -46,7 +47,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdsho
 	//CreateWindow(L"MainWndClass", L"My Dumb Program", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 1600, 900, NULL, NULL, NULL, NULL);
 	MainInst.SetWindow(CreateWindow(L"MainWndClass", L"Лабораторная №4", 
 		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | 
-		WS_VISIBLE, 100, 100, 1600, 600, NULL, NULL, NULL, NULL));
+		WS_VISIBLE, 100, 100, 1600, 900, NULL, NULL, NULL, NULL));
 	MainWnd = MainInst.GetWindow();
 	MainInst.Redraw(MainWnd);
 	while (GetMessage(&MainWndMessage, NULL, NULL, NULL)) {
@@ -123,9 +124,7 @@ void MainWindow::AddMenus(HWND hWnd)
 }
 void MainWindow::AddWidgets(HWND hWnd)
 {
-	RECT r;
 	UINT y=-30, offset = 30;
-	GetClientRect(hWnd, &r);
 
 	SendMessageA(CreateWindowA("static", "Лаба 5", WS_CHILD | WS_VISIBLE | SS_CENTER, r.right / 4 - 100, y+=offset+3, 847, 40, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
 	SendMessageA(CreateWindowA("static", "Вариант 19", WS_CHILD | WS_VISIBLE | SS_CENTER, r.right / 4 - 100, y += offset, 847, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
@@ -148,23 +147,23 @@ void MainWindow::AddWidgets(HWND hWnd)
 		10 + 140 + 10 + 140 + 10, y, 140, 20, hWnd, NULL, NULL, NULL);
 	// заголовок таблицы 2
 	CreateWindowA("static", "Вес", WS_CHILD | WS_VISIBLE | SS_CENTER,
-		r.right - 10, y, 80, 20, hWnd, NULL, NULL, NULL);
+		r.right - (90), y, 80, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Рост", WS_CHILD | WS_VISIBLE | SS_CENTER,
-		r.right - (10 + 90), y, 80, 20, hWnd, NULL, NULL, NULL);
+		r.right - (90  * 2), y, 80, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Возраст", WS_CHILD | WS_VISIBLE | SS_CENTER,
-		r.right - (10 + 90 * 2), y, 80, 20, hWnd, NULL, NULL, NULL);
+		r.right - (90 * 3), y, 80, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Номер", WS_CHILD | WS_VISIBLE | SS_CENTER,
-		r.right - (10 + 90 * 3), y, 80, 20, hWnd, NULL, NULL, NULL);
+		r.right - (90 * 4), y, 80, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Отчество", WS_CHILD | WS_VISIBLE | SS_CENTER,
-		r.right - (10 + 90 * 3 + 150), y, 140, 20, hWnd, NULL, NULL, NULL);
+		r.right - (90 * 4 + 150), y, 140, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Имя", WS_CHILD | WS_VISIBLE | SS_CENTER,
-		r.right - (10 + 90 * 3 + 150 * 2), y, 140, 20, hWnd, NULL, NULL, NULL);
+		r.right - (90 * 4 + 150 * 2), y, 140, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Фамилия", WS_CHILD | WS_VISIBLE | SS_CENTER,
-		r.right - (10 + 90 * 3 + 150 * 3), y, 140, 20, hWnd, NULL, NULL, NULL);
+		r.right - (90 * 4 + 150 * 3), y, 140, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Команда", WS_CHILD | WS_VISIBLE | SS_CENTER,
-		r.right - (10 + 90 * 3 + 150 * 4), y, 140, 20, hWnd, NULL, NULL, NULL);
+		r.right - (90 * 4 + 150 * 4), y, 140, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Страна", WS_CHILD | WS_VISIBLE | SS_CENTER,
-		r.right - (10 + 90 * 3 + 150 * 4), y, 140, 20, hWnd, NULL, NULL, NULL);
+		r.right - (90 * 4 + 150 * 4), y, 140, 20, hWnd, NULL, NULL, NULL);
 }
 void MainWindow::SetWindow(HWND _hWnd)
 {
@@ -232,7 +231,31 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 		case OnNewLinePressed2:
 		{
-			
+			if (playerlines.size() == 10) break;
+
+			playerwnd np = { };
+
+			np.weight = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+				r.right - (90), ply += 28, 80, 20, hWnd, NULL, NULL, NULL);
+			np.height = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+				r.right - (90 * 2), ply, 80, 20, hWnd, NULL, NULL, NULL);
+			np.age = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+				r.right - (90 * 3), ply, 80, 20, hWnd, NULL, NULL, NULL);
+			np.num = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+				r.right - (90 * 4), ply, 80, 20, hWnd, NULL, NULL, NULL);
+			np.otchestvo = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+				r.right - (90 * 4 + 150), ply, 140, 20, hWnd, NULL, NULL, NULL);
+			np.name = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+				r.right - (90 * 4 + 150 * 2), ply, 140, 20, hWnd, NULL, NULL, NULL);
+			np.surname = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+				r.right - (90 * 4 + 150 * 3), ply, 140, 20, hWnd, NULL, NULL, NULL);
+			np.team = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+				r.right - (90 * 4 + 150 * 4), ply, 140, 20, hWnd, NULL, NULL, NULL);
+			np.origin = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+				r.right - (90 * 4 + 150 * 4), ply, 140, 20, hWnd, NULL, NULL, NULL);
+
+			playerlines.push_back(np);
+
 			break;
 		}
 
@@ -265,6 +288,7 @@ void MainWindow::Redraw(HWND hWnd)
 }
 void MainWindow::OnCreated(HWND hWnd)
 {
+	GetClientRect(hWnd, &r);
 	MainInst.AddMenus(hWnd);
 	MainInst.AddWidgets(hWnd);
 }

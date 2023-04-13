@@ -17,6 +17,9 @@ HWND SolveBtn1 = { };
 HWND SolveBtn2 = { };
 HWND Output1 = { };
 HWND Output2 = { };
+HWND Out11 = { };
+HWND Out12 = { };
+HWND Out13 = { };
 
 vector<trainwnd> trainlines;
 UINT tly;
@@ -178,6 +181,12 @@ void MainWindow::AddWidgets(HWND hWnd)
 		10 + 140 + 10, r.bottom-172, 140, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Время отправления", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		10 + 140 + 10 + 140 + 10, r.bottom-172, 140, 20, hWnd, NULL, NULL, NULL);
+	Out11 = CreateWindowA("static", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		10, r.bottom - 154, 140, 20, hWnd, NULL, NULL, NULL);
+	Out12 = CreateWindowA("static", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		10+150, r.bottom - 154, 140, 20, hWnd, NULL, NULL, NULL);
+	Out13 = CreateWindowA("static", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		10+150+150, r.bottom - 154, 140, 20, hWnd, NULL, NULL, NULL);
 }
 void MainWindow::SetWindow(HWND _hWnd)
 {

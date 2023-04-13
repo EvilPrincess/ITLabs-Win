@@ -31,6 +31,18 @@ struct Player
 	FIO fio;
 	UINT num, age, height, weight;
 };
+struct trainwnd
+{
+	HWND NAZN;
+	HWND NUMR;
+	HWND TIME;
+};
+struct playerwnd
+{
+	HWND origin, team;
+	HWND surname, name, otchestvo;
+	HWND num, age, height, weight;
+};
 
 namespace SpecialFunctionsForLabs {
 	bool is_int(string str);

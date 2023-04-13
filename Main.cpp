@@ -9,12 +9,19 @@ using namespace SpecialFunctionsForLabs;
 //
 MainWindow MainInst = { };
 char BUFFER[40] = { };
+HWND MainWnd = { };
 HWND NewBtn1 = { };
 HWND NewBtn2 = { };
 HWND SolveBtn1 = { };
 HWND SolveBtn2 = { };
 HWND Output1 = { };
 HWND Output2 = { };
+
+vector<trainwnd> trainlines;
+UINT tly;
+
+vector<playerwnd> playerlines;
+UINT ply;
 
 
 //		FONTS
@@ -40,6 +47,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdsho
 	MainInst.SetWindow(CreateWindow(L"MainWndClass", L"Лабораторная №4", 
 		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | 
 		WS_VISIBLE, 100, 100, 1600, 600, NULL, NULL, NULL, NULL));
+	MainWnd = MainInst.GetWindow();
+	MainInst.Redraw(MainWnd);
 	while (GetMessage(&MainWndMessage, NULL, NULL, NULL)) {
 		TranslateMessage(&MainWndMessage);
 		DispatchMessage(&MainWndMessage);
@@ -125,18 +134,17 @@ void MainWindow::AddWidgets(HWND hWnd)
 	SendMessageA(CreateWindowA("static", "Задача 2", WS_CHILD | WS_VISIBLE | SS_CENTER, r.right - 453, y, 384, 30, hWnd, NULL, NULL, NULL), WM_SETFONT, (WPARAM)titlef, 0);
 
 	// Дальше идет реализация лабы
-	//
-	// Задача 1
-	//
-	NewBtn1 = CreateWindowA("button", "Добавить запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
+	NewBtn1 = CreateWindowA("button", "Добавить запись (максимум 10)", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		10, y+=offset, 140, 20, hWnd, (HMENU)OnNewLinePressed1, NULL, NULL);
-	NewBtn1 = CreateWindowA("button", "Добавить запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
+	NewBtn2 = CreateWindowA("button", "Добавить запись (максимум 10)", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		r.right - 453, y, 140, 20, hWnd, (HMENU)OnNewLinePressed1, NULL, NULL);
-	//
-	// Задача 2
-	//
-	
-
+	tly = ply = y+=offset;
+	CreateWindowA("static", "Пункт назначения", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		10, y, 140, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Номер поезда", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		10 + 140 + 10, y, 140, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Время отправления", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		10 + 140 + 10 + 140 + 10, y, 140, 20, hWnd, NULL, NULL, NULL);
 }
 void MainWindow::SetWindow(HWND _hWnd)
 {
@@ -186,6 +194,18 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		//
 		case OnNewLinePressed1:
 		{
+			if (trainlines.size() == 10) break;
+
+			trainwnd newtrain = { };
+
+			newtrain.NAZN = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+				10, tly+=28, 140, 20, hWnd, NULL, NULL, NULL);
+			newtrain.NUMR = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+				10 + 140 + 10, tly, 140, 20, hWnd, NULL, NULL, NULL);
+			newtrain.TIME = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+				10 + 140 + 10 + 140 + 10, tly, 140, 20, hWnd, NULL, NULL, NULL);
+
+			trainlines.push_back(newtrain);
 
 			break;
 		}
@@ -205,6 +225,9 @@ void MainWindow::Redraw(HWND hWnd)
 	GetClientRect(hWnd, &r);
 
 	hDC = GetDC(hWnd);
+
+	/*Rectangle(hDC, 10, 80, r.bottom - 10, 400);
+	Rectangle(hDC, r.right - 400, 80, r.bottom - 10, r.right - 10);*/
 
 	ReleaseDC(hWnd, hDC);
 }

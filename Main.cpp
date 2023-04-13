@@ -337,7 +337,7 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			{
 				char NUMR[256];
 				GetWindowTextA(train.NUMR, NUMR, 256);
-				if (NUMR == toFind)
+				if (string(NUMR) == string(toFind))
 				{
 					char NAZN[256];
 					char TIME[256];

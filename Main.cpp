@@ -417,7 +417,7 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			}
 
 			// проверим, остались ли незаполненные поля
-			for (Player p : players_infos)
+			/*for (Player &p : players_infos)
 			{
 				if (p.age == 0 || p.fio.name == "" || p.fio.surname == "" ||
 					p.fio.otchestvo == "" || p.height == 0 || p.num == 0 ||
@@ -425,7 +425,7 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 					MessageBoxA(NULL, "Заполните все пустые поля!", "Ошибка", MB_OK | MB_ICONERROR);
 					return;
 				}
-			}
+			}*/
 
 			// заполним вектор всех возрастов
 			vector<pair<string, UINT>> ages;
@@ -433,7 +433,7 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			{
 				// эта команда уже есть в векторе?
 				BOOL found = FALSE;
-				for (pair<string, UINT> para : ages)
+				for (pair<string, UINT> &para : ages)
 				{
 					if (para.first == p.team)
 					{
@@ -446,7 +446,7 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			}
 
 			// посчитаем кол-во членов команды и разделим конечный возраст на них
-			for (pair<string, UINT> age : ages)
+			for (pair<string, UINT> &age : ages)
 			{
 				UINT count = 0;
 				for (Player p : players_infos)
@@ -457,7 +457,7 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			}
 
 			// проверим, нет ли равных по возрасту команд
-			for (pair<string, UINT> para1 : ages)
+			for (pair<string, UINT> &para1 : ages)
 			{
 				for (pair<string, UINT> para2 : ages)
 				{
@@ -472,11 +472,11 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 			// найдем самую молодую команду
 			pair<string, UINT> smol = { "a", 99999 };
-			for (pair<string, UINT> para : ages) if (para.second < smol.second) smol = para;
+			for (pair<string, UINT> &para : ages) if (para.second < smol.second) smol = para;
 
 			// выведем информацию о ней
 			UINT cur_off = 344 + 28;
-			for (Player p : players_infos)
+			for (Player &p : players_infos)
 			{
 				if (p.team == smol.first)
 				{

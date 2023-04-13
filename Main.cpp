@@ -200,18 +200,27 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	if (toDel != -1)
 	{
 		trainlines.erase(trainlines.begin() + toDel);
+		tly -= 28;
 		toDel = -1;
 	}
 	toMove = FALSE;
-	for (playerwnd& player : playerlines)
+	for (UINT i = 0; i < playerlines.size(); i++)
 	{
+		playerwnd player = playerlines[i];
 		if (player.onDelete == wParam)
 		{
 			player.Delete();
 			toMove = TRUE;
+			toDel = i;
 			continue;
 		}
 		if (toMove) player.move();
+	}
+	if (toDel != -1)
+	{
+		playerlines.erase(playerlines.begin() + toDel);
+		ply -= 28;
+		toDel = -1;
 	}
 	switch (wParam)
 	{

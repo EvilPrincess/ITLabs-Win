@@ -45,7 +45,9 @@ void playerwnd::Delete()
 }
 void playerwnd::move()
 {
-
+	RECT r;
+	GetClientRect(origin, &r);
+	MoveWindow(origin, 1800-90, y-=28, r.right, r.bottom, TRUE);
 }
 
 bool SpecialFunctionsForLabs::is_int(string str)

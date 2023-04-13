@@ -164,7 +164,7 @@ void MainWindow::AddWidgets(HWND hWnd)
 	CreateWindowA("static", "Команда", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		r.right - (90 * 4 + 150 * 4), y, 140, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Страна", WS_CHILD | WS_VISIBLE | SS_CENTER,
-		r.right - (90 * 4 + 150 * 4), y, 140, 20, hWnd, NULL, NULL, NULL);
+		r.right - (90 * 4 + 150 * 5), y, 140, 20, hWnd, NULL, NULL, NULL);
 }
 void MainWindow::SetWindow(HWND _hWnd)
 {
@@ -295,10 +295,11 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			np.team = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 4 + 150 * 4), ply, 140, 20, hWnd, NULL, NULL, NULL);
 			np.origin = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
-				r.right - (90 * 4 + 150 * 4), ply, 140, 20, hWnd, NULL, NULL, NULL);
+				r.right - (90 * 4 + 150 * 5), ply, 140, 20, hWnd, NULL, NULL, NULL);
 			np.DelBtn = CreateWindowA("button", "Удалить запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
-				r.right - (90 * 4 + 150 * 5), ply, 140, 20, hWnd, (HMENU)(np.onDelete = newDelete++), NULL, NULL);
+				r.right - (90 * 4 + 150 * 6), ply, 140, 20, hWnd, (HMENU)(np.onDelete = newDelete++), NULL, NULL);
 			np.y = ply;
+			np.mr = r;
 
 			playerlines.push_back(np);
 

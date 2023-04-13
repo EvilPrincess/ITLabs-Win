@@ -50,6 +50,7 @@ struct playerwnd
 	HWND DelBtn;
 	UINT onDelete;
 	UINT y;
+	RECT mr;
 	void Delete();
 	void move();
 };

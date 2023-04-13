@@ -46,8 +46,26 @@ void playerwnd::Delete()
 void playerwnd::move()
 {
 	RECT r;
-	GetClientRect(origin, &r);
-	MoveWindow(origin, 1800-90, y-=28, r.right, r.bottom, TRUE);
+	GetClientRect(this->weight, &r);
+	MoveWindow(this->weight, mr.right-(90), y-=28, r.right, r.bottom, TRUE);
+	GetClientRect(this->height, &r);
+	MoveWindow(this->height, mr.right-(90*2), y, r.right, r.bottom, TRUE);
+	GetClientRect(this->age, &r);
+	MoveWindow(this->age, mr.right-(90*3), y, r.right, r.bottom, TRUE);
+	GetClientRect(this->num, &r);
+	MoveWindow(this->num, mr.right-(90*4), y, r.right, r.bottom, TRUE);
+	GetClientRect(this->otchestvo, &r);
+	MoveWindow(this->otchestvo, mr.right-(90*4 + 150), y, r.right, r.bottom, TRUE);
+	GetClientRect(this->name, &r);
+	MoveWindow(this->name, mr.right-(90*4 + 150 * 2), y, r.right, r.bottom, TRUE);
+	GetClientRect(this->surname, &r);
+	MoveWindow(this->surname, mr.right-(90*4 + 150 * 3), y, r.right, r.bottom, TRUE);
+	GetClientRect(this->team, &r);
+	MoveWindow(this->team, mr.right-(90*4 + 150 * 4), y, r.right, r.bottom, TRUE);
+	GetClientRect(this->origin, &r);
+	MoveWindow(this->origin, mr.right-(90*4 + 150 * 5), y, r.right, r.bottom, TRUE);
+	GetClientRect(this->DelBtn, &r);
+	MoveWindow(this->DelBtn, mr.right-(90*4 + 150 * 6), y, r.right, r.bottom, TRUE);
 }
 
 bool SpecialFunctionsForLabs::is_int(string str)

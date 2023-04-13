@@ -9,8 +9,10 @@
 
 //		Индексы для лаб
 //
-#define OnIsPalindromClicked 4
-#define OnSSolveClicked 5
+#define OnNewLinePressed1 4
+#define OnNewLinePressed2 5
+#define Solve1 6
+#define Solve2 7
 
 class MainWindow
 {

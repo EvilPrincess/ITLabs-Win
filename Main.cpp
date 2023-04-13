@@ -9,6 +9,10 @@ using namespace SpecialFunctionsForLabs;
 //
 MainWindow MainInst = { };
 char BUFFER[40] = { };
+HWND NewBtn1 = { };
+HWND NewBtn2 = { };
+HWND SolveBtn1 = { };
+HWND SolveBtn2 = { };
 
 
 //		FONTS
@@ -122,6 +126,8 @@ void MainWindow::AddWidgets(HWND hWnd)
 	//
 	// Задача 1
 	//
+	NewBtn1 = CreateWindowA("button", "Добавить запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		10, y+=offset, 140, 20, hWnd, (HMENU)OnNewLinePressed1, NULL, NULL);
 	
 	//
 	// Задача 2
@@ -175,7 +181,17 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		//
 		// Лабы
 		//
-		
+		case OnNewLinePressed1:
+		{
+
+			break;
+		}
+
+		case OnNewLinePressed2:
+		{
+			
+			break;
+		}
 	}
 }
 void MainWindow::Redraw(HWND hWnd)

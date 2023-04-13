@@ -167,11 +167,17 @@ void MainWindow::AddWidgets(HWND hWnd)
 		r.right - (90 * 4 + 150 * 5), y, 140, 20, hWnd, NULL, NULL, NULL);
 
 	CreateWindowA("static", "Номер", WS_CHILD | WS_VISIBLE | WS_BORDER | SS_CENTER,
-		10, r.bottom - 200, 100, 20, hWnd, NULL, NULL, NULL);
+		10, r.bottom - 200, 140, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | WS_BORDER | SS_CENTER,
 		10 + 140 + 10, r.bottom - 200, 140, 20, hWnd, (HMENU)EditNum1, NULL, NULL);
 	CreateWindowA("button", "Найти запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		10 + 150 + 150, r.bottom - 200, 140, 20, hWnd, (HMENU)Solve1, NULL, NULL);
+	CreateWindowA("static", "Пункт назначения", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		10, r.bottom-172, 140, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Номер поезда", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		10 + 140 + 10, r.bottom-172, 140, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Время отправления", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		10 + 140 + 10 + 140 + 10, r.bottom-172, 140, 20, hWnd, NULL, NULL, NULL);
 }
 void MainWindow::SetWindow(HWND _hWnd)
 {

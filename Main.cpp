@@ -306,13 +306,13 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 			playerwnd np = { };
 
-			np.weight = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+			np.weight = CreateWindowA("edit", "", ES_NUMBER | WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				r.right - (90), ply += 28, 80, 20, hWnd, NULL, NULL, NULL);
-			np.height = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+			np.height = CreateWindowA("edit", "", ES_NUMBER | WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 2), ply, 80, 20, hWnd, NULL, NULL, NULL);
-			np.age = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+			np.age = CreateWindowA("edit", "", ES_NUMBER | WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 3), ply, 80, 20, hWnd, NULL, NULL, NULL);
-			np.num = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+			np.num = CreateWindowA("edit", "", ES_NUMBER | WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 4), ply, 80, 20, hWnd, NULL, NULL, NULL);
 			np.otchestvo = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 4 + 150), ply, 140, 20, hWnd, NULL, NULL, NULL);
@@ -392,6 +392,17 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				if (string(buf) != "") np.weight = stoi(string(buf));
 
 				players_infos.push_back(np);
+			}
+
+			// проверим, остались ли незаполненные пол€
+			for (Player p : players_infos)
+			{
+				if (p.age == 0 || p.fio.name == "" || p.fio.surname == "" ||
+					p.fio.otchestvo == "" || p.height == 0 || p.num == 0 ||
+					p.origin == "" || p.team == "" || p.weight == 0) {
+					MessageBoxA(NULL, "«аполните все пустые пол€!", "ќшибка", MB_OK | MB_ICONERROR);
+					return;
+				}
 			}
 
 			// заполним вектор всех возрастов

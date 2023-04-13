@@ -409,11 +409,29 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			for (pair<string, UINT> para : ages) if (para.second < smol.second) smol = para;
 
 			// выведем информацию о ней
+			UINT cur_off = 344 + 28;
 			for (Player p : players_infos)
 			{
 				if (p.team == smol.first)
 				{
-
+					CreateWindowA("static", to_string(p.weight).c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90), cur_off -= 28, 80, 20, hWnd, NULL, NULL, NULL);
+					CreateWindowA("static", to_string(p.height).c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 2), cur_off, 80, 20, hWnd, NULL, NULL, NULL);
+					CreateWindowA("static", to_string(p.age).c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 3), cur_off, 80, 20, hWnd, NULL, NULL, NULL);
+					CreateWindowA("static", to_string(p.num).c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 4), cur_off, 80, 20, hWnd, NULL, NULL, NULL);
+					CreateWindowA("static", p.fio.otchestvo.c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 4 + 150), cur_off, 140, 20, hWnd, NULL, NULL, NULL);
+					CreateWindowA("static", p.fio.name.c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 4 + 150 * 2), cur_off, 140, 20, hWnd, NULL, NULL, NULL);
+					CreateWindowA("static", p.fio.surname.c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 4 + 150 * 3), cur_off, 140, 20, hWnd, NULL, NULL, NULL);
+					CreateWindowA("static", p.team.c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 4 + 150 * 4), cur_off, 140, 20, hWnd, NULL, NULL, NULL);
+					CreateWindowA("static", p.origin.c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 4 + 150 * 5), cur_off, 140, 20, hWnd, NULL, NULL, NULL);
 				}
 			}
 

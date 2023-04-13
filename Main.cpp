@@ -135,16 +135,36 @@ void MainWindow::AddWidgets(HWND hWnd)
 
 	// Дальше идет реализация лабы
 	NewBtn1 = CreateWindowA("button", "Добавить запись (максимум 10)", WS_CHILD | WS_VISIBLE | SS_CENTER,
-		10, y+=offset, 140, 20, hWnd, (HMENU)OnNewLinePressed1, NULL, NULL);
+		10, y+=offset, 240, 20, hWnd, (HMENU)OnNewLinePressed1, NULL, NULL);
 	NewBtn2 = CreateWindowA("button", "Добавить запись (максимум 10)", WS_CHILD | WS_VISIBLE | SS_CENTER,
-		r.right - 453, y, 140, 20, hWnd, (HMENU)OnNewLinePressed1, NULL, NULL);
+		r.right - 453, y, 240, 20, hWnd, (HMENU)OnNewLinePressed2, NULL, NULL);
 	tly = ply = y+=offset;
+	// заголовок таблицы 1
 	CreateWindowA("static", "Пункт назначения", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		10, y, 140, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Номер поезда", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		10 + 140 + 10, y, 140, 20, hWnd, NULL, NULL, NULL);
 	CreateWindowA("static", "Время отправления", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		10 + 140 + 10 + 140 + 10, y, 140, 20, hWnd, NULL, NULL, NULL);
+	// заголовок таблицы 2
+	CreateWindowA("static", "Вес", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - 10, y, 80, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Рост", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (10 + 90), y, 80, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Возраст", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (10 + 90 * 2), y, 80, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Номер", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (10 + 90 * 3), y, 80, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Отчество", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (10 + 90 * 3 + 150), y, 140, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Имя", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (10 + 90 * 3 + 150 * 2), y, 140, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Фамилия", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (10 + 90 * 3 + 150 * 3), y, 140, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Команда", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (10 + 90 * 3 + 150 * 4), y, 140, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Страна", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (10 + 90 * 3 + 150 * 4), y, 140, 20, hWnd, NULL, NULL, NULL);
 }
 void MainWindow::SetWindow(HWND _hWnd)
 {
@@ -213,6 +233,18 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		case OnNewLinePressed2:
 		{
 			
+			break;
+		}
+
+		case Solve1:
+		{
+
+			break;
+		}
+
+		case Solve2:
+		{
+
 			break;
 		}
 	}

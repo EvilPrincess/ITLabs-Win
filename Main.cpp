@@ -24,6 +24,7 @@ UINT tly;
 vector<playerwnd> playerlines;
 UINT ply;
 
+UINT newDelete = 100;
 
 //		FONTS
 //
@@ -182,6 +183,22 @@ BOOL DrawLine(HDC hdc, int x1, int y1, int x2, int y2) {
 }
 void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	for (trainwnd& train : trainlines)
+	{
+		if (train.onDelete == wParam)
+		{
+			train.Delete();
+			return;
+		}
+	}
+	for (playerwnd& player : playerlines)
+	{
+		if (player.onDelete == wParam)
+		{
+			player.Delete();
+			return;
+		}
+	}
 	switch (wParam)
 	{
 		case OnClearAllClicked:
@@ -224,7 +241,7 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			newtrain.TIME = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
 				10 + 140 + 10 + 140 + 10, tly, 140, 20, hWnd, NULL, NULL, NULL);
 			newtrain.DelBtn = CreateWindowA("button", "Удалить запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
-				10 + 140 + 10 + 140 + 10 + 140 + 10, tly, 140, 20, hWnd, (HMENU)DeleteLine1, NULL, (LPVOID)trainlines.size());
+				10 + 140 + 10 + 140 + 10 + 140 + 10, tly, 140, 20, hWnd, (HMENU)(newtrain.onDelete = newDelete++), NULL, NULL);
 
 			trainlines.push_back(newtrain);
 
@@ -256,21 +273,9 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			np.origin = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 4 + 150 * 4), ply, 140, 20, hWnd, NULL, NULL, NULL);
 			np.DelBtn = CreateWindowA("button", "Удалить запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
-				r.right - (90 * 4 + 150 * 5), ply, 140, 20, hWnd, (HMENU)DeleteLine2, NULL, (LPVOID)playerlines.size());
+				r.right - (90 * 4 + 150 * 5), ply, 140, 20, hWnd, (HMENU)(np.onDelete = newDelete++), NULL, NULL);
 
 			playerlines.push_back(np);
-
-			break;
-		}
-
-		case DeleteLine1:
-		{
-
-			break;
-		}
-
-		case DeleteLine2:
-		{
 
 			break;
 		}

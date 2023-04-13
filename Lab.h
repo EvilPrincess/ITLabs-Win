@@ -37,6 +37,7 @@ struct trainwnd
 	HWND NUMR;
 	HWND TIME;
 	HWND DelBtn;
+	UINT onDelete;
 	void Delete();
 };
 struct playerwnd
@@ -45,6 +46,7 @@ struct playerwnd
 	HWND surname, name, otchestvo;
 	HWND num, age, height, weight;
 	HWND DelBtn;
+	UINT onDelete;
 	void Delete();
 };
 

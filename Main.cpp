@@ -46,9 +46,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdsho
 
 
 	//CreateWindow(L"MainWndClass", L"My Dumb Program", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 1600, 900, NULL, NULL, NULL, NULL);
-	MainInst.SetWindow(CreateWindow(L"MainWndClass", L"Лабораторная №4", 
+	MainInst.SetWindow(CreateWindow(L"MainWndClass", L"Лабораторная №5", 
 		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | 
-		WS_VISIBLE, 100, 100, 1800, 900, NULL, NULL, NULL, NULL));
+		WS_VISIBLE, 100, 100, 2000, 900, NULL, NULL, NULL, NULL));
 	MainWnd = MainInst.GetWindow();
 	MainInst.Redraw(MainWnd);
 	while (GetMessage(&MainWndMessage, NULL, NULL, NULL)) {

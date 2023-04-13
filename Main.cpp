@@ -47,7 +47,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdsho
 	//CreateWindow(L"MainWndClass", L"My Dumb Program", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 1600, 900, NULL, NULL, NULL, NULL);
 	MainInst.SetWindow(CreateWindow(L"MainWndClass", L"Лабораторная №4", 
 		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | 
-		WS_VISIBLE, 100, 100, 1600, 900, NULL, NULL, NULL, NULL));
+		WS_VISIBLE, 100, 100, 1800, 900, NULL, NULL, NULL, NULL));
 	MainWnd = MainInst.GetWindow();
 	MainInst.Redraw(MainWnd);
 	while (GetMessage(&MainWndMessage, NULL, NULL, NULL)) {
@@ -223,6 +223,8 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				10 + 140 + 10, tly, 140, 20, hWnd, NULL, NULL, NULL);
 			newtrain.TIME = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
 				10 + 140 + 10 + 140 + 10, tly, 140, 20, hWnd, NULL, NULL, NULL);
+			newtrain.DelBtn = CreateWindowA("button", "Удалить запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
+				10 + 140 + 10 + 140 + 10 + 140 + 10, tly, 140, 20, hWnd, (HMENU)DeleteLine1, NULL, (LPVOID)trainlines.size());
 
 			trainlines.push_back(newtrain);
 
@@ -253,6 +255,8 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				r.right - (90 * 4 + 150 * 4), ply, 140, 20, hWnd, NULL, NULL, NULL);
 			np.origin = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 4 + 150 * 4), ply, 140, 20, hWnd, NULL, NULL, NULL);
+			np.DelBtn = CreateWindowA("button", "Удалить запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
+				r.right - (90 * 4 + 150 * 5), ply, 140, 20, hWnd, (HMENU)DeleteLine2, NULL, (LPVOID)playerlines.size());
 
 			playerlines.push_back(np);
 

@@ -36,12 +36,14 @@ struct trainwnd
 	HWND NAZN;
 	HWND NUMR;
 	HWND TIME;
+	HWND DelBtn;
 };
 struct playerwnd
 {
 	HWND origin, team;
 	HWND surname, name, otchestvo;
 	HWND num, age, height, weight;
+	HWND DelBtn;
 };
 
 namespace SpecialFunctionsForLabs {

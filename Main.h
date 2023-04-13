@@ -13,6 +13,8 @@
 #define OnNewLinePressed2 5
 #define Solve1 6
 #define Solve2 7
+#define DeleteLine1 8
+#define DeleteLine2 9
 
 class MainWindow
 {

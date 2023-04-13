@@ -357,6 +357,65 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 		case Solve2:
 		{
+			// заполним вектор инфы для удобства
+			vector<Player> players_infos;
+			for (playerwnd plwnd : playerlines)
+			{
+				Player np = { };
+				char buf[256];
+
+				GetWindowTextA(plwnd.age, buf, 256);
+				np.age = stoi(string(buf));
+				GetWindowTextA(plwnd.height, buf, 256);
+				np.height = stoi(string(buf));
+				GetWindowTextA(plwnd.name, buf, 256);
+				np.fio.name = string(buf);
+				GetWindowTextA(plwnd.num, buf, 256);
+				np.num = stoi(string(buf));
+				GetWindowTextA(plwnd.origin, buf, 256);
+				np.origin = string(buf);
+				GetWindowTextA(plwnd.otchestvo, buf, 256);
+				np.fio.otchestvo = string(buf);
+				GetWindowTextA(plwnd.surname, buf, 256);
+				np.fio.surname = string(buf);
+				GetWindowTextA(plwnd.team, buf, 256);
+				np.team = string(buf);
+				GetWindowTextA(plwnd.weight, buf, 256);
+				np.weight = stoi(string(buf));
+
+				players_infos.push_back(np);
+			}
+
+			// заполним вектор всех возрастов
+			vector<pair<string, UINT>> ages;
+			for (Player p : players_infos)
+			{
+				// эта команда уже есть в векторе?
+				BOOL found = FALSE;
+				for (pair<string, UINT> para : ages)
+				{
+					if (para.first == p.team)
+					{
+						para.second += p.age;
+						found = TRUE;
+						break;
+					}
+				}
+				if (!found) ages.push_back(pair<string, UINT>{p.team, p.age});
+			}
+
+			// найдем самую молодую команду
+			pair<string, UINT> smol = { "a", 99999 };
+			for (pair<string, UINT> para : ages) if (para.second < smol.second) smol = para;
+
+			// выведем информацию о ней
+			for (Player p : players_infos)
+			{
+				if (p.team == smol.first)
+				{
+
+				}
+			}
 
 			break;
 		}

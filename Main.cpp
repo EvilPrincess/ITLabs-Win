@@ -183,21 +183,27 @@ BOOL DrawLine(HDC hdc, int x1, int y1, int x2, int y2) {
 }
 void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	BOOL toMove = FALSE;
 	for (trainwnd& train : trainlines)
 	{
 		if (train.onDelete == wParam)
 		{
 			train.Delete();
-			return;
+			toMove = TRUE;
+			continue;
 		}
+		if (toMove) train.move();
 	}
+	toMove = FALSE;
 	for (playerwnd& player : playerlines)
 	{
 		if (player.onDelete == wParam)
 		{
 			player.Delete();
-			return;
+			toMove = TRUE;
+			continue;
 		}
+		if (toMove) player.move();
 	}
 	switch (wParam)
 	{

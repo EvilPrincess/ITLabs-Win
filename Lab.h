@@ -39,6 +39,7 @@ struct trainwnd
 	HWND DelBtn;
 	UINT onDelete;
 	void Delete();
+	void move();
 };
 struct playerwnd
 {
@@ -48,6 +49,7 @@ struct playerwnd
 	HWND DelBtn;
 	UINT onDelete;
 	void Delete();
+	void move();
 };
 
 namespace SpecialFunctionsForLabs {

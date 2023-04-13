@@ -234,11 +234,11 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 			trainwnd newtrain = { };
 
-			newtrain.NAZN = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+			newtrain.NAZN = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				10, tly+=28, 140, 20, hWnd, NULL, NULL, NULL);
-			newtrain.NUMR = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+			newtrain.NUMR = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				10 + 140 + 10, tly, 140, 20, hWnd, NULL, NULL, NULL);
-			newtrain.TIME = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+			newtrain.TIME = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				10 + 140 + 10 + 140 + 10, tly, 140, 20, hWnd, NULL, NULL, NULL);
 			newtrain.DelBtn = CreateWindowA("button", "Удалить запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
 				10 + 140 + 10 + 140 + 10 + 140 + 10, tly, 140, 20, hWnd, (HMENU)(newtrain.onDelete = newDelete++), NULL, NULL);
@@ -254,23 +254,23 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 			playerwnd np = { };
 
-			np.weight = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+			np.weight = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				r.right - (90), ply += 28, 80, 20, hWnd, NULL, NULL, NULL);
-			np.height = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+			np.height = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 2), ply, 80, 20, hWnd, NULL, NULL, NULL);
-			np.age = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+			np.age = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 3), ply, 80, 20, hWnd, NULL, NULL, NULL);
-			np.num = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+			np.num = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 4), ply, 80, 20, hWnd, NULL, NULL, NULL);
-			np.otchestvo = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+			np.otchestvo = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 4 + 150), ply, 140, 20, hWnd, NULL, NULL, NULL);
-			np.name = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+			np.name = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 4 + 150 * 2), ply, 140, 20, hWnd, NULL, NULL, NULL);
-			np.surname = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+			np.surname = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 4 + 150 * 3), ply, 140, 20, hWnd, NULL, NULL, NULL);
-			np.team = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+			np.team = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 4 + 150 * 4), ply, 140, 20, hWnd, NULL, NULL, NULL);
-			np.origin = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
+			np.origin = CreateWindowA("edit", "", WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 4 + 150 * 4), ply, 140, 20, hWnd, NULL, NULL, NULL);
 			np.DelBtn = CreateWindowA("button", "Удалить запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 4 + 150 * 5), ply, 140, 20, hWnd, (HMENU)(np.onDelete = newDelete++), NULL, NULL);

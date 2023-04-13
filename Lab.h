@@ -37,6 +37,7 @@ struct trainwnd
 	HWND NUMR;
 	HWND TIME;
 	HWND DelBtn;
+	void Delete();
 };
 struct playerwnd
 {
@@ -44,6 +45,7 @@ struct playerwnd
 	HWND surname, name, otchestvo;
 	HWND num, age, height, weight;
 	HWND DelBtn;
+	void Delete();
 };
 
 namespace SpecialFunctionsForLabs {

@@ -263,6 +263,18 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			break;
 		}
 
+		case DeleteLine1:
+		{
+
+			break;
+		}
+
+		case DeleteLine2:
+		{
+
+			break;
+		}
+
 		case Solve1:
 		{
 

@@ -11,6 +11,26 @@ double S(unsigned int n)
 	if (n == 1) return 0.5;
 	return pow(n, 3) / (n + 1) + S(n - 1);
 }
+void trainwnd::Delete()
+{
+	DestroyWindow(this->NAZN);
+	DestroyWindow(this->NUMR);
+	DestroyWindow(this->TIME);
+	DestroyWindow(this->DelBtn);
+}
+void playerwnd::Delete()
+{
+	DestroyWindow(this->origin);
+	DestroyWindow(this->team);
+	DestroyWindow(this->surname);
+	DestroyWindow(this->name);
+	DestroyWindow(this->otchestvo);
+	DestroyWindow(this->num);
+	DestroyWindow(this->age);
+	DestroyWindow(this->height);
+	DestroyWindow(this->weight);
+	DestroyWindow(this->DelBtn);
+}
 
 bool SpecialFunctionsForLabs::is_int(string str)
 {

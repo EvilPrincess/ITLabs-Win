@@ -20,7 +20,15 @@ void trainwnd::Delete()
 }
 void trainwnd::move()
 {
-	//MoveWindow(this->NAZN, 10, y - 28, NULL, NULL, TRUE);
+	RECT r;
+	GetClientRect(NAZN, &r);
+	MoveWindow(this->NAZN, 10, y -= 28, r.right, r.bottom, TRUE);
+	GetClientRect(NUMR, &r);
+	MoveWindow(this->NUMR, 10 + 140 + 10, y, r.right, r.bottom, TRUE);
+	GetClientRect(TIME, &r);
+	MoveWindow(this->TIME, 10 + 140 + 10 + 140 + 10, y, r.right, r.bottom, TRUE);
+	GetClientRect(DelBtn, &r);
+	MoveWindow(this->DelBtn, 10 + 140 + 10 + 140 + 10 + 140 + 10, y, r.right, r.bottom, TRUE);
 }
 void playerwnd::Delete()
 {

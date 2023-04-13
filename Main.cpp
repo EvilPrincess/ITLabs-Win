@@ -355,6 +355,9 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 		case Solve1:
 		{
+			SetWindowTextA(Out11, "");
+			SetWindowTextA(Out12, "");
+			SetWindowTextA(Out13, "");
 			char toFind[256];
 			GetWindowTextA(EditWnd1, toFind, 256);
 			for (trainwnd train : trainlines)
@@ -440,6 +443,17 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 					}
 				}
 				if (!found) ages.push_back(pair<string, UINT>{p.team, p.age});
+			}
+
+			// посчитаем кол-во членов команды и разделим конечный возраст на них
+			for (pair<string, UINT> age : ages)
+			{
+				UINT count = 0;
+				for (Player p : players_infos)
+				{
+					if (p.team == age.first) count++;
+				}
+				age.second /= count;
 			}
 
 			// проверим, нет ли равных по возрасту команд

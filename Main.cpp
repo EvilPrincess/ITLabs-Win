@@ -248,6 +248,7 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				10 + 140 + 10 + 140 + 10, tly, 140, 20, hWnd, NULL, NULL, NULL);
 			newtrain.DelBtn = CreateWindowA("button", "Удалить запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
 				10 + 140 + 10 + 140 + 10 + 140 + 10, tly, 140, 20, hWnd, (HMENU)(newtrain.onDelete = newDelete++), NULL, NULL);
+			newtrain.y = tly;
 
 			trainlines.push_back(newtrain);
 
@@ -280,6 +281,7 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				r.right - (90 * 4 + 150 * 4), ply, 140, 20, hWnd, NULL, NULL, NULL);
 			np.DelBtn = CreateWindowA("button", "Удалить запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
 				r.right - (90 * 4 + 150 * 5), ply, 140, 20, hWnd, (HMENU)(np.onDelete = newDelete++), NULL, NULL);
+			np.y = ply;
 
 			playerlines.push_back(np);
 

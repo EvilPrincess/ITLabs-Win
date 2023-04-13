@@ -18,6 +18,10 @@ void trainwnd::Delete()
 	DestroyWindow(this->TIME);
 	DestroyWindow(this->DelBtn);
 }
+void trainwnd::move()
+{
+	//MoveWindow(this->NAZN, 10, y - 28, NULL, NULL, TRUE);
+}
 void playerwnd::Delete()
 {
 	DestroyWindow(this->origin);
@@ -30,6 +34,10 @@ void playerwnd::Delete()
 	DestroyWindow(this->height);
 	DestroyWindow(this->weight);
 	DestroyWindow(this->DelBtn);
+}
+void playerwnd::move()
+{
+
 }
 
 bool SpecialFunctionsForLabs::is_int(string str)

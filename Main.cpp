@@ -188,6 +188,10 @@ void MainWindow::AddWidgets(HWND hWnd)
 		10+150, r.bottom - 154, 140, 20, hWnd, NULL, NULL, NULL);
 	Out13 = CreateWindowA("static", "", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		10+150+150, r.bottom - 154, 140, 20, hWnd, NULL, NULL, NULL);
+
+	CreateWindowA("button", "Информация о самой молодой команде", 
+		WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (90 * 4 + 150 * 5), r.bottom - 400, 300, 20, hWnd, (HMENU)Solve2, NULL, NULL);
 }
 void MainWindow::SetWindow(HWND _hWnd)
 {

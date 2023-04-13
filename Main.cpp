@@ -26,6 +26,7 @@ vector<trainwnd> trainlines;
 UINT tly;
 
 vector<playerwnd> playerlines;
+vector<playerwnd> outputted_playerlines;
 UINT ply;
 
 UINT newDelete = 100;
@@ -357,6 +358,13 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 		case Solve2:
 		{
+			// уберем все выводы
+			for (playerwnd pl : outputted_playerlines)
+			{
+				pl.Delete();
+			}
+			outputted_playerlines.clear();
+
 			// заполним вектор инфы для удобства
 			vector<Player> players_infos;
 			for (playerwnd plwnd : playerlines)
@@ -365,13 +373,13 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				char buf[256];
 
 				GetWindowTextA(plwnd.age, buf, 256);
-				np.age = stoi(string(buf));
+				if (string(buf) != "") np.age = stoi(string(buf));
 				GetWindowTextA(plwnd.height, buf, 256);
-				np.height = stoi(string(buf));
+				if (string(buf) != "") np.height = stoi(string(buf));
 				GetWindowTextA(plwnd.name, buf, 256);
 				np.fio.name = string(buf);
 				GetWindowTextA(plwnd.num, buf, 256);
-				np.num = stoi(string(buf));
+				if (string(buf) != "") np.num = stoi(string(buf));
 				GetWindowTextA(plwnd.origin, buf, 256);
 				np.origin = string(buf);
 				GetWindowTextA(plwnd.otchestvo, buf, 256);
@@ -381,7 +389,7 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				GetWindowTextA(plwnd.team, buf, 256);
 				np.team = string(buf);
 				GetWindowTextA(plwnd.weight, buf, 256);
-				np.weight = stoi(string(buf));
+				if (string(buf) != "") np.weight = stoi(string(buf));
 
 				players_infos.push_back(np);
 			}
@@ -414,24 +422,27 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			{
 				if (p.team == smol.first)
 				{
-					CreateWindowA("static", to_string(p.weight).c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
-						r.right - (90), cur_off -= 28, 80, 20, hWnd, NULL, NULL, NULL);
-					CreateWindowA("static", to_string(p.height).c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
-						r.right - (90 * 2), cur_off, 80, 20, hWnd, NULL, NULL, NULL);
-					CreateWindowA("static", to_string(p.age).c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
-						r.right - (90 * 3), cur_off, 80, 20, hWnd, NULL, NULL, NULL);
-					CreateWindowA("static", to_string(p.num).c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
-						r.right - (90 * 4), cur_off, 80, 20, hWnd, NULL, NULL, NULL);
-					CreateWindowA("static", p.fio.otchestvo.c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
-						r.right - (90 * 4 + 150), cur_off, 140, 20, hWnd, NULL, NULL, NULL);
-					CreateWindowA("static", p.fio.name.c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
-						r.right - (90 * 4 + 150 * 2), cur_off, 140, 20, hWnd, NULL, NULL, NULL);
-					CreateWindowA("static", p.fio.surname.c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
-						r.right - (90 * 4 + 150 * 3), cur_off, 140, 20, hWnd, NULL, NULL, NULL);
-					CreateWindowA("static", p.team.c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
-						r.right - (90 * 4 + 150 * 4), cur_off, 140, 20, hWnd, NULL, NULL, NULL);
-					CreateWindowA("static", p.origin.c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
-						r.right - (90 * 4 + 150 * 5), cur_off, 140, 20, hWnd, NULL, NULL, NULL);
+					playerwnd npw = { };
+					npw.weight = CreateWindowA("static", to_string(p.weight).c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90), r.bottom - (cur_off -= 28), 80, 20, hWnd, NULL, NULL, NULL);
+					npw.height = CreateWindowA("static", to_string(p.height).c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 2), r.bottom - cur_off, 80, 20, hWnd, NULL, NULL, NULL);
+					npw.age = CreateWindowA("static", to_string(p.age).c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 3), r.bottom - cur_off, 80, 20, hWnd, NULL, NULL, NULL);
+					npw.num = CreateWindowA("static", to_string(p.num).c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 4), r.bottom - cur_off, 80, 20, hWnd, NULL, NULL, NULL);
+					npw.otchestvo = CreateWindowA("static", p.fio.otchestvo.c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 4 + 150), r.bottom - cur_off, 140, 20, hWnd, NULL, NULL, NULL);
+					npw.name = CreateWindowA("static", p.fio.name.c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 4 + 150 * 2), r.bottom - cur_off, 140, 20, hWnd, NULL, NULL, NULL);
+					npw.surname = CreateWindowA("static", p.fio.surname.c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 4 + 150 * 3), r.bottom - cur_off, 140, 20, hWnd, NULL, NULL, NULL);
+					npw.team = CreateWindowA("static", p.team.c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 4 + 150 * 4), r.bottom - cur_off, 140, 20, hWnd, NULL, NULL, NULL);
+					npw.origin = CreateWindowA("static", p.origin.c_str(), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+						r.right - (90 * 4 + 150 * 5), r.bottom - cur_off, 140, 20, hWnd, NULL, NULL, NULL);
+				
+					outputted_playerlines.push_back(npw);
 				}
 			}
 

@@ -20,6 +20,7 @@ HWND Output2 = { };
 HWND Out11 = { };
 HWND Out12 = { };
 HWND Out13 = { };
+HWND EditWnd1 = { };
 
 vector<trainwnd> trainlines;
 UINT tly;
@@ -171,7 +172,7 @@ void MainWindow::AddWidgets(HWND hWnd)
 
 	CreateWindowA("static", "Номер", WS_CHILD | WS_VISIBLE | WS_BORDER | SS_CENTER,
 		10, r.bottom - 200, 140, 20, hWnd, NULL, NULL, NULL);
-	CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | WS_BORDER | SS_CENTER,
+	EditWnd1 = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | WS_BORDER | SS_CENTER,
 		10 + 140 + 10, r.bottom - 200, 140, 20, hWnd, (HMENU)EditNum1, NULL, NULL);
 	CreateWindowA("button", "Найти запись", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		10 + 150 + 150, r.bottom - 200, 140, 20, hWnd, (HMENU)Solve1, NULL, NULL);
@@ -330,7 +331,23 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 		case Solve1:
 		{
-
+			char toFind[256];
+			GetWindowTextA(EditWnd1, toFind, 256);
+			for (trainwnd train : trainlines)
+			{
+				char NUMR[256];
+				GetWindowTextA(train.NUMR, NUMR, 256);
+				if (NUMR == toFind)
+				{
+					char NAZN[256];
+					char TIME[256];
+					GetWindowTextA(train.NAZN, NAZN, 256);
+					GetWindowTextA(train.TIME, TIME, 256);
+					SetWindowTextA(Out11, NAZN);
+					SetWindowTextA(Out12, NUMR);
+					SetWindowTextA(Out13, TIME);
+				}
+			}
 			break;
 		}
 

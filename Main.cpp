@@ -171,6 +171,25 @@ void MainWindow::AddWidgets(HWND hWnd)
 	CreateWindowA("static", "Страна", WS_CHILD | WS_VISIBLE | SS_CENTER,
 		r.right - (90 * 4 + 150 * 5), y, 140, 20, hWnd, NULL, NULL, NULL);
 
+	CreateWindowA("static", "Вес", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (90), r.bottom - 372, 80, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Рост", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (90 * 2), r.bottom - 372, 80, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Возраст", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (90 * 3), r.bottom - 372, 80, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Номер", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (90 * 4), r.bottom - 372, 80, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Отчество", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (90 * 4 + 150), r.bottom - 372, 140, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Имя", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (90 * 4 + 150 * 2), r.bottom - 372, 140, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Фамилия", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (90 * 4 + 150 * 3), r.bottom - 372, 140, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Команда", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (90 * 4 + 150 * 4), r.bottom - 372, 140, 20, hWnd, NULL, NULL, NULL);
+	CreateWindowA("static", "Страна", WS_CHILD | WS_VISIBLE | SS_CENTER,
+		r.right - (90 * 4 + 150 * 5), r.bottom - 372, 140, 20, hWnd, NULL, NULL, NULL);
+
 	CreateWindowA("static", "Номер", WS_CHILD | WS_VISIBLE | WS_BORDER | SS_CENTER,
 		10, r.bottom - 200, 140, 20, hWnd, NULL, NULL, NULL);
 	EditWnd1 = CreateWindowA("edit", "", WS_CHILD | WS_VISIBLE | WS_BORDER | SS_CENTER,

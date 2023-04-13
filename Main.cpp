@@ -442,6 +442,20 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				if (!found) ages.push_back(pair<string, UINT>{p.team, p.age});
 			}
 
+			// проверим, нет ли равных по возрасту команд
+			for (pair<string, UINT> para1 : ages)
+			{
+				for (pair<string, UINT> para2 : ages)
+				{
+					if (para1 == para2) continue;
+					if (para1.second == para2.second)
+					{
+						MessageBoxA(NULL, "Ќайдены одинаково молодые команды!", "јщипка!", MB_OK | MB_ICONERROR);
+						return;
+					}
+				}
+			}
+
 			// найдем самую молодую команду
 			pair<string, UINT> smol = { "a", 99999 };
 			for (pair<string, UINT> para : ages) if (para.second < smol.second) smol = para;

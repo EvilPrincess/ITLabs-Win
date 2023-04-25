@@ -59,6 +59,10 @@ public:
 	string SetText(string _Text);
 	string AddText(string _Text);
 	string AddLine(string _Text);
+	void Disable();
+	void Enable();
+	void Show();
+	void Hide();
 
 	// public static methods
 	static LRESULT CALLBACK StaticProc(HWND, UINT, WPARAM, LPARAM);

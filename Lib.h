@@ -2,7 +2,7 @@
 
 #define vRGB(v) RGB(v.x, v.y, v.z)
 
-enum states { inactive, hovered, pressed, enabled, disabled, valid, invalid };
+enum states { hovered, pressed, enabled, disabled, valid, invalid };
 enum class haligns { left, center, right };
 enum class valigns { top, center, bottom };
 

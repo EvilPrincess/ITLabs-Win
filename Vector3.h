@@ -3,12 +3,12 @@
 class Vector3
 {
 private:
-	DOUBLE length;
+	LONG length;
 public:
-	DOUBLE x, y, z;
+	LONG x, y, z;
 
 	Vector3();
-	Vector3(DOUBLE _x, DOUBLE _y, DOUBLE _z);
+	Vector3(long _x, long _y, long _z);
 	DOUBLE Len();
 	Vector3 Normalized();
 	DOUBLE cos(Vector3 _v3);

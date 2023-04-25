@@ -7,9 +7,15 @@
 #define REFRESH_IDT 1
 #define REFRESH_RATE 1000 / 144
 
-#define BUT1 0
-#define BUT2 1
-#define BUT3 2
+// лаба 6 - »ƒс окон
+#define ST11 11
+#define ST12 12
+#define ST21 21
+#define ST22 22
+#define BT11 111
+#define BT12 112
+#define BT21 121
+#define BT22 122
 
 //#ifndef REFRESH_RATE
 //HDC hDCScreen = GetDC(NULL);
@@ -24,8 +30,8 @@ private:
 	static Display* p_instance;
 	HWND wnd;
 
-	Display();
-	HWND GenWnd();
+	Display(const V3 _Size = V3{ 400, 300, 0 });
+	HWND GenWnd(const V3 _Size = V3{400, 300, 0});
 	
 	static void CommandHandler(HWND hWnd, WPARAM wParam, LPARAM lParam);
 	static void TimerManager(HWND hWnd, WPARAM wParam, LPARAM lParam);
@@ -40,7 +46,7 @@ public:
 	HWND GetWnd();
 	HWND SetWnd(HWND hWnd);
 
-	static Display* GetInstance();
+	static Display* GetInstance(const V3 _Size = V3{ 400, 300, 0 });
 protected:
 
 };

@@ -3,15 +3,16 @@
 Display* display = { };
 Display* Display::p_instance = nullptr;
 HINSTANCE hMainInst = { };
-EDIT* ed = { };
-BUTTON* btn = { };
+
+STATIC* st11, * st12, * st21, * st22;
+BUTTON* bt11, * bt12, * bt21, * bt22;
 
 int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
 {
 	Register();
 
 	hMainInst = hInst;
-	display = Display::GetInstance();
+	display = Display::GetInstance(V3{1665, 900, 0});
 
 
 	MSG MainWndMessage = { };
@@ -23,10 +24,10 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmd
 }
 
 
-Display::Display()
+Display::Display(const V3 _Size)
 {
 	DisplayRegister();
-	wnd = GenWnd();
+	wnd = GenWnd(_Size);
 }
 
 LRESULT WINAPI Display::DisplayProc(HWND hWnd, 
@@ -54,25 +55,23 @@ LRESULT WINAPI Display::DisplayProc(HWND hWnd,
 void Display::OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
 	SetTimer(hWnd, 0, 1000 / 144, NULL);
-	EDITPARAMS edp = { };
-	edp.bdFocCol = V3(255, 255, 255);
 
-	// создаю "ЭДИТЫ" - в будущем сделаю из них галочки
-	new EDIT(hWnd, "", V3(50, 50, 0), V3(60, 60, 3), edp);
-	new EDIT(hWnd, "", V3(50+60+10, 50, 0), V3(60, 60, 3), edp);
-	new EDIT(hWnd, "", V3(50+60+10+60+10, 50, 0), V3(60, 60, 3), edp);
+	RECT r;
+	GetClientRect(hWnd, &r);
+	
+	// лаба 6 - интерфейс
 
-	// создаю кнопки
-	new BUTTON(hWnd, "A", V3(50, 120, 0), BUT1, V3(60, 60, 3));
-	new BUTTON(hWnd, "B", V3(50+60+10, 120, 0), BUT2, V3(60, 60, 3));
-	new BUTTON(hWnd, "C", V3(50+60+10+60+10, 120, 0), BUT3, V3(60, 60, 3));
-
-	// создаю статики
 	STATICPARAMS stp;
-	stp.alignh = haligns::left;
+	stp.alignh = haligns::center;
 	stp.alignv = valigns::top;
-	STATIC* st = new STATIC(hWnd, "Это тип статик", V3(50 + 60 + 10 + 60 + 10 + 60 + 50, 50, 0), NULL, V3(300, 500, 3), stp);
-	st->AddLine("другой текст");
+
+	st11 = new STATIC(hWnd, "Выберите файл...", V3{ 10, 10, 0 }, ST11, V3{400, 720, 3}, stp); stp.textCol = V3(203, 30, 30);
+	st12 = new STATIC(hWnd, "Файл не выбран!", V3{ 10 + 400 + 10, 10, 0 }, ST12, V3{400, 720, 3}, stp); stp.textCol = STATIC_DEFAULT_TEXTCOL;
+	st21 = new STATIC(hWnd, "Выберите файл...", V3{ r.right - 10 - 400 - 10 - 400, 10, 0 }, ST21, V3{ 400, 720, 3 }, stp); stp.textCol = V3(203, 30, 30);
+	st22 = new STATIC(hWnd, "Файл не выбран!", V3{ r.right - 10 - 400, 10, 0 }, ST22, V3{ 400, 720, 3 }, stp);
+
+	//bt11 = new BUTTON(hWnd, "Открыть", );
+
 }
 
 void Display::OnResize(HWND hWnd, WPARAM wParam, LPARAM lParam)
@@ -84,15 +83,7 @@ void Display::CommandHandler(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
 	switch (wParam)
 	{
-		case BUT1:
-			MB("A pressed");
-			break;
-		case BUT2:
-			MB("B pressed");
-			break;
-		case BUT3:
-			MB("C pressed");
-			break;
+		
 	}
 }
 
@@ -131,11 +122,11 @@ HWND Display::SetWnd(HWND hWnd)
 	return wnd;
 }
 
-HWND Display::GenWnd()
+HWND Display::GenWnd(const V3 _Size)
 {
 	wnd = CreateWindow(DISPLAY_WC, L"My Windows Test Program",
 		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_CLIPCHILDREN |
-		WS_MINIMIZEBOX | WS_VISIBLE, 100, 100, 700, 600, NULL, NULL, NULL, NULL);
+		WS_MINIMIZEBOX | WS_VISIBLE, 100, 100, _Size.x, _Size.y, NULL, NULL, NULL, NULL);
 	return wnd;
 }
 
@@ -168,9 +159,9 @@ void MB(string _Msg, BOOL _IsWarning)
 	MessageBoxA(NULL, _Msg.c_str(), "Да", _IsWarning ? MB_OK | MB_ICONERROR : MB_OK);
 }
 
-Display* Display::GetInstance()
+Display* Display::GetInstance(const V3 _Size)
 {
 	if (!p_instance)
-		p_instance = new Display();
+		p_instance = new Display(_Size);
 	return p_instance;
 }

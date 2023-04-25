@@ -73,6 +73,10 @@ public:
 		BUTTONPARAMS _Params = BUTTON_DEFAULT_PARAMS
 	);
 	BOOL MoveControl(V3);
+	void Disable();
+	void Enable();
+	void Show();
+	void Hide();
 
 	// public static methods
 	static LRESULT CALLBACK ButtonProc(HWND, UINT, WPARAM, LPARAM);

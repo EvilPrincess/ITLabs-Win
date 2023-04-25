@@ -12,7 +12,7 @@ Button::Button(HWND _hParWnd, string _Text, V3 _Position, UINT_PTR _nIDEvent, V3
 	transform.position = _Position;
 	nIDEvent = _nIDEvent;
 	transform.size = _Size;
-	state = inactive;
+	state = enabled;
 	laststate = invalid;
 	GenWnd(_hParWnd);
 	objmap[wnd] = this;
@@ -40,6 +40,28 @@ BOOL Button::MoveControl(V3 _To)
 	return 1; 
 }
 
+void Button::Disable()
+{
+	state = disabled;
+}
+
+void Button::Enable()
+{
+	state = enabled;
+}
+
+void Button::Show()
+{
+	ShowWindow(wnd, 1);
+	ShowWindow(placeholder, 1);
+}
+
+void Button::Hide()
+{
+	ShowWindow(wnd, 0);
+	ShowWindow(placeholder, 0);
+}
+
 void Button::Press()
 {
 	state = pressed;
@@ -65,7 +87,7 @@ void Button::TimerManager(HWND hWnd, WPARAM wParam, LPARAM lParam)
 		GetWindowRect(hWnd, &r);
 		if (PtInRect(&r, pt))
 			obj->state = hovered;
-		else obj->state = inactive;
+		else obj->state = enabled;
 		KillTimer(hWnd, UNPRESS_IDT);
 		//MessageBoxA(NULL, (to_string(pt.x) + " - " + to_string(pt.y) + " - " + to_string(r.left) + " - " + to_string(r.top)).c_str(), "cap", MB_OK);
 	}
@@ -89,7 +111,7 @@ void Button::Redraw()
 
 	switch (state)
 	{
-	case inactive:
+	case enabled:
 		hBrush = CreateSolidBrush(vRGB(params.bkCol));
 		hPen = CreatePen(BS_SOLID, params.bdWidth, vRGB(params.bdDefCol));
 		SetBkColor(mDC, vRGB(params.bkCol));
@@ -173,7 +195,7 @@ LRESULT Button::ButtonProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CTLCOLORSTATIC:
 	{
 		HDC hdcStatic = (HDC)wParam;
-		COLORREF col = vRGB((obj->state == inactive ? obj->params.bkCol : obj->state == hovered ? obj->params.bkHovCol : obj->params.bkPreCol));
+		COLORREF col = vRGB((obj->state == enabled ? obj->params.bkCol : obj->state == hovered ? obj->params.bkHovCol : obj->params.bkPreCol));
 		DeleteObject(obj->hPlaceholderBKBrush);
 		obj->hPlaceholderBKBrush = CreateSolidBrush(col);
 		SetTextColor(hdcStatic, vRGB(obj->params.textCol));
@@ -198,7 +220,7 @@ LRESULT Button::ButtonProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		if (obj)
 		{
-			if (obj->state != pressed) obj->state = inactive;
+			if (obj->state != pressed) obj->state = enabled;
 		}
 		break;
 	}

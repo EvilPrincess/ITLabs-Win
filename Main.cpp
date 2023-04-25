@@ -417,7 +417,7 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			}
 
 			// проверим, остались ли незаполненные пол€
-			/*for (Player &p : players_infos)
+			for (Player &p : players_infos)
 			{
 				if (p.age == 0 || p.fio.name == "" || p.fio.surname == "" ||
 					p.fio.otchestvo == "" || p.height == 0 || p.num == 0 ||
@@ -425,7 +425,7 @@ void MainWindow::CommandHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 					MessageBoxA(NULL, "«аполните все пустые пол€!", "ќшибка", MB_OK | MB_ICONERROR);
 					return;
 				}
-			}*/
+			}
 
 			// заполним вектор всех возрастов
 			vector<pair<string, UINT>> ages;

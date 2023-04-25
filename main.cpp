@@ -65,10 +65,14 @@ void Display::OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	stp.alignh = haligns::center;
 	stp.alignv = valigns::top;
 
-	st11 = new STATIC(hWnd, "Выберите файл...", V3{ 10, 10, 0 }, ST11, V3{400, 780, 3}, stp); stp.textCol = V3(203, 30, 30);
-	st12 = new STATIC(hWnd, "Файл не выбран!", V3{ 10 + 400 + 10, 10, 0 }, ST12, V3{400, 780, 3}, stp); stp.textCol = STATIC_DEFAULT_TEXTCOL;
-	st21 = new STATIC(hWnd, "Выберите файл...", V3{ r.right - 10 - 400 - 10 - 400, 10, 0 }, ST21, V3{ 400, 780, 3 }, stp); stp.textCol = V3(203, 30, 30);
-	st22 = new STATIC(hWnd, "Файл не выбран!", V3{ r.right - 10 - 400, 10, 0 }, ST22, V3{ 400, 780, 3 }, stp);
+	new STATIC(hWnd, "Лабораторная работа №6", V3(10, 10, 0), NULL, V3{1630, 35, 3});
+	new STATIC(hWnd, "Задача №1", V3(10, 10 + 30 + 10, 0), NULL, V3{810, 35, 3});
+	new STATIC(hWnd, "Задача №2", V3(r.right - 820, 10 + 30 + 10, 0), NULL, V3{810, 35, 3});
+
+	st11 = new STATIC(hWnd, "Выберите файл...", V3{ 10, 10 + 70 + 10, 0 }, ST11, V3{400, 700, 3}, stp); stp.textCol = V3(203, 30, 30);
+	st12 = new STATIC(hWnd, "Файл не выбран!", V3{ 10 + 400 + 10, 10 + 70 + 10, 0 }, ST12, V3{400, 700, 3}, stp); stp.textCol = STATIC_DEFAULT_TEXTCOL;
+	st21 = new STATIC(hWnd, "Выберите файл...", V3{ r.right - 10 - 400 - 10 - 400, 10 + 70 + 10, 0 }, ST21, V3{ 400, 700, 3 }, stp); stp.textCol = V3(203, 30, 30);
+	st22 = new STATIC(hWnd, "Файл не выбран!", V3{ r.right - 10 - 400, 10 + 70 + 10, 0 }, ST22, V3{ 400, 700, 3 }, stp);
 
 	bt11 = new BUTTON(hWnd, "Открыть", V3{10, r.bottom - 60, 0}, BT11, V3{400, 50, 3});
 	bt12 = new BUTTON(hWnd, "Вычислить", V3{ 10 + 400 + 10, r.bottom - 60, 0 }, BT12, V3{ 400, 50, 3 }); bt12->Disable();

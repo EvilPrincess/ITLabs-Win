@@ -6,6 +6,8 @@ HINSTANCE hMainInst = { };
 
 STATIC *st11, *st12, *st21, *st22;
 BUTTON *bt11, *bt12, *bt21, *bt22;
+HANDLE file1, file2;
+char buffer1[16384], buffer2[16384];
 
 int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
 {
@@ -89,20 +91,76 @@ void Display::CommandHandler(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
 	switch (wParam)
 	{
+		// открыть номер 1
 		case BT11: 
-			
-			bt12->Enable();
+		{
+			OPENFILENAMEA ofn;
+			char szFile[260];
+
+			ZeroMemory(&ofn, sizeof(ofn));
+			ofn.lStructSize = sizeof(ofn);
+			ofn.hwndOwner = hWnd;
+			ofn.lpstrFile = szFile;
+			ofn.lpstrFile[0] = '\0';
+			ofn.nMaxFile = sizeof(szFile);
+			ofn.lpstrFilter = "Text\0*.TXT\0";
+			ofn.nFilterIndex = 1;
+			ofn.lpstrFileTitle = NULL;
+			ofn.nMaxFileTitle = 0;
+			ofn.lpstrInitialDir = NULL;
+			ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+			if (GetOpenFileNameA(&ofn) == TRUE)
+			{
+				file1 = CreateFileA(
+					ofn.lpstrFile,
+					GENERIC_READ,
+					0,
+					(LPSECURITY_ATTRIBUTES)NULL,
+					OPEN_EXISTING,
+					FILE_ATTRIBUTE_NORMAL,
+					(HANDLE)NULL
+				);
+				if (ReadFile(file1, buffer1, sizeof(buffer1), NULL, NULL))
+				{
+					st11->params.textCol = STATIC_DEFAULT_TEXTCOL;
+					st11->SetAlignH(haligns::left);
+					st11->SetText("Предпросмотр выбранного файла:\n\n" + string(buffer1));
+				}
+				else
+				{
+					st11->params.textCol = V3{ 203, 30, 30 };
+					st11->params.alignh = haligns::center;
+					st11->SetText("Ошибка чтения файла!");
+				}
+				bt12->Enable();
+			}
+			bt11->Enable();
 			break;
+		}
+		// вычислить номер 1
 		case BT12:
-
-			break;
-		case BT21: 
+		{
 			
-			bt22->Enable();
 			break;
+		}
+		// открыть номер 2
+		case BT21: 
+		{
+			OPENFILENAMEA ofn;
+			if (GetOpenFileNameA(&ofn) == TRUE)
+			{
+
+				bt22->Enable();
+			}
+			bt21->Enable();
+			break;
+		}
+		// вычислить номер 2
 		case BT22:
+		{
 
 			break;
+		}
 	}
 }
 

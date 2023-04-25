@@ -109,6 +109,10 @@ void Button::Redraw()
 	HGDIOBJ oldp = SelectObject(mDC, hPen);
 	Rectangle(mDC, 0, 0, transform.size.x, transform.size.y);
 
+	SetWindowLongA(placeholder, GWL_STYLE, WS_CHILD | WS_VISIBLE |
+		(params.alignh == haligns::center ? SS_CENTER : params.alignh == haligns::left ? SS_LEFT : SS_RIGHT) |
+		(params.alignv == valigns::center ? BS_CENTER : params.alignv == valigns::top ? BS_TOP : BS_BOTTOM));
+
 	switch (state)
 	{
 	case enabled:

@@ -32,6 +32,14 @@ void Static::GenWnd(HWND _hParWnd)
 	SendMessage(placeholder, WM_SETFONT, (WPARAM)hf, 0);
 }
 
+void Static::UpdateAligning()
+{
+	SetWindowLongA(placeholder, GWL_STYLE, WS_CHILD | WS_VISIBLE |
+		(params.alignh == haligns::center ? SS_CENTER : params.alignh == haligns::left ? SS_LEFT : SS_RIGHT) |
+		(params.alignv == valigns::center ? BS_CENTER : params.alignv == valigns::top ? BS_TOP : BS_BOTTOM));
+	InvalidateRect(placeholder, NULL, TRUE);
+}
+
 BOOL Static::MoveControl(V3 _To)
 {
 	transform.Translate(_To);
@@ -70,8 +78,10 @@ void Static::CommandHandler(HWND hWnd, WPARAM wParam, LPARAM lParam)
 
 void Static::TimerManager(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
-	STATIC* obj = objmap[hWnd];
-	if (wParam == REDRAW_IDT) this->Redraw();
+	if (wParam == REDRAW_IDT)
+	{
+		Redraw();
+	}
 }
 
 void Static::Redraw()
@@ -119,7 +129,16 @@ void Static::Redraw()
 	DeleteObject(oldp);
 	DeleteObject(oldb);
 }
-
+void Static::SetAlignV(valigns _Al)
+{
+	params.alignv = _Al;
+	UpdateAligning();
+}
+void Static::SetAlignH(haligns _Al)
+{
+	params.alignh = _Al;
+	UpdateAligning();
+}
 void Static::OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
 	SetTimer(hWnd, REDRAW_IDT, REDRAW_RATE, NULL);

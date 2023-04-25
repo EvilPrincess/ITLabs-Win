@@ -40,6 +40,7 @@ private:
 	void TimerManager(HWND hWnd, WPARAM wParam, LPARAM lParam);
 	void Redraw();
 	void GenWnd(HWND _hParWnd);
+	void UpdateAligning();
 
 	// private static methods
 	static void OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam);
@@ -63,6 +64,8 @@ public:
 	void Enable();
 	void Show();
 	void Hide();
+	void SetAlignV(valigns _Al);
+	void SetAlignH(haligns _Al);
 
 	// public static methods
 	static LRESULT CALLBACK StaticProc(HWND, UINT, WPARAM, LPARAM);

@@ -10,6 +10,7 @@ private:
 public:
 	static map<HWND, T*> objmap;
 	TRANSFORM transform;
+	PARAMS params;
 
 	HWND GetWindow()
 	{
@@ -34,7 +35,6 @@ public:
 		return MoveWindow(wnd, _To.x, _To.y, transform.size.x, transform.size.y, TRUE);
 	}
 protected:
-	PARAMS params;
 	HWND wnd;
 	string text;
 };

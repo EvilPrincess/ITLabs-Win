@@ -131,6 +131,8 @@ void Display::CommandHandler(HWND hWnd, WPARAM wParam, LPARAM lParam)
 					st11->params.textCol = V3{ 203, 30, 30 };
 					st11->params.alignh = haligns::center;
 					st11->SetText("Ошибка чтения файла!");
+					bt11->Enable();
+					break;
 				}
 				bt12->Enable();
 			}
@@ -140,16 +142,59 @@ void Display::CommandHandler(HWND hWnd, WPARAM wParam, LPARAM lParam)
 		// вычислить номер 1
 		case BT12:
 		{
-			
+			vector<char> uniq;
+			for (char c : buffer1)
+			{
+				if (find(uniq.begin(), uniq.end(), c) == uniq.end()) uniq.push_back(c);
+			}
+			st12->params.textCol = STATIC_DEFAULT_TEXTCOL;
+			st12->SetAlignH(haligns::left);
+			st12->SetText("Уникальные символы файла:\n\n" + string(uniq.begin(), uniq.end()));
 			break;
 		}
 		// открыть номер 2
 		case BT21: 
 		{
 			OPENFILENAMEA ofn;
+			char szFile[260];
+
+			ZeroMemory(&ofn, sizeof(ofn));
+			ofn.lStructSize = sizeof(ofn);
+			ofn.hwndOwner = hWnd;
+			ofn.lpstrFile = szFile;
+			ofn.lpstrFile[0] = '\0';
+			ofn.nMaxFile = sizeof(szFile);
+			ofn.lpstrFilter = "Text\0*.TXT\0";
+			ofn.nFilterIndex = 1;
+			ofn.lpstrFileTitle = NULL;
+			ofn.nMaxFileTitle = 0;
+			ofn.lpstrInitialDir = NULL;
+			ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 			if (GetOpenFileNameA(&ofn) == TRUE)
 			{
-
+				file2 = CreateFileA(
+					ofn.lpstrFile,
+					GENERIC_READ,
+					0,
+					(LPSECURITY_ATTRIBUTES)NULL,
+					OPEN_EXISTING,
+					FILE_ATTRIBUTE_NORMAL,
+					(HANDLE)NULL
+				);
+				if (ReadFile(file2, buffer2, sizeof(buffer2), NULL, NULL))
+				{
+					st21->params.textCol = STATIC_DEFAULT_TEXTCOL;
+					st21->SetAlignH(haligns::left);
+					st21->SetText("Предпросмотр выбранного файла:\n\n" + string(buffer2));
+				}
+				else
+				{
+					st21->params.textCol = V3{ 203, 30, 30 };
+					st21->params.alignh = haligns::center;
+					st21->SetText("Ошибка чтения файла!");
+					bt21->Enable();
+					break;
+				}
 				bt22->Enable();
 			}
 			bt21->Enable();
@@ -158,7 +203,7 @@ void Display::CommandHandler(HWND hWnd, WPARAM wParam, LPARAM lParam)
 		// вычислить номер 2
 		case BT22:
 		{
-
+			
 			break;
 		}
 	}

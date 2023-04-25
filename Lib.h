@@ -37,4 +37,4 @@ WNDCLASS NewWindowClass(
 	HCURSOR Cursor = LoadCursor(NULL, IDC_ARROW),
 	HICON Icon = LoadIcon(NULL, IDI_QUESTION)
 );
-void Register();
+void InitLib();

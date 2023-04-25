@@ -23,7 +23,7 @@ WNDCLASS NewWindowClass(LPCWSTR Name, WNDPROC Procedure, HBRUSH BGColor, HCURSOR
 
 	return NWC;
 }
-void Register()
+void InitLib()
 {
 	WNDCLASS wc = { };
 	RegisterClass(&(wc = NewWindowClass(EDIT_WC, Edit::EditProc, (HBRUSH)GetStockObject(HOLLOW_BRUSH))));

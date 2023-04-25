@@ -12,7 +12,7 @@ Button::Button(HWND _hParWnd, string _Text, V3 _Position, UINT_PTR _nIDEvent, V3
 	transform.position = _Position;
 	nIDEvent = _nIDEvent;
 	transform.size = _Size;
-	state = enabled;
+	state = params.startstate;
 	laststate = invalid;
 	GenWnd(_hParWnd);
 	objmap[wnd] = this;
@@ -135,6 +135,12 @@ void Button::Redraw()
 		SetBkColor(mDC, vRGB(params.bkCol));
 		SetTextColor(mDC, vRGB(params.textCol));
 		break;
+	default:
+		hBrush = CreateSolidBrush(vRGB(params.bkDisCol));
+		hPen = CreatePen(BS_SOLID, params.bdWidth, vRGB(params.bdDisCol));
+		SetBkColor(mDC, vRGB(params.bkDisCol));
+		SetTextColor(mDC, vRGB(params.textDisCol));
+		break;
 	}
 
 	DeleteObject(SelectObject(mDC, hBrush));
@@ -195,7 +201,7 @@ LRESULT Button::ButtonProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CTLCOLORSTATIC:
 	{
 		HDC hdcStatic = (HDC)wParam;
-		COLORREF col = vRGB((obj->state == enabled ? obj->params.bkCol : obj->state == hovered ? obj->params.bkHovCol : obj->params.bkPreCol));
+		COLORREF col = vRGB((obj->state == enabled ? obj->params.bkCol : obj->state == hovered ? obj->params.bkHovCol : obj->state == pressed ? obj->params.bkPreCol : obj->params.bkDisCol));
 		DeleteObject(obj->hPlaceholderBKBrush);
 		obj->hPlaceholderBKBrush = CreateSolidBrush(col);
 		SetTextColor(hdcStatic, vRGB(obj->params.textCol));
@@ -212,7 +218,7 @@ LRESULT Button::ButtonProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			tme.hwndTrack = hWnd;
 			TrackMouseEvent(&tme);
 
-			if (obj->state != pressed) obj->state = hovered;
+			if (obj->state != pressed && obj->state != disabled && obj->state != invalid) obj->state = hovered;
 		}
 		break;
 	}
@@ -220,7 +226,7 @@ LRESULT Button::ButtonProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		if (obj)
 		{
-			if (obj->state != pressed) obj->state = enabled;
+			if (obj->state != pressed && obj->state != disabled && obj->state != invalid) obj->state = enabled;
 		}
 		break;
 	}
@@ -230,7 +236,7 @@ LRESULT Button::ButtonProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		isLMBPressed_LIBVAR = TRUE;
 		if (obj)
 		{
-			if (obj->state != invalid)
+			if (obj->state != invalid && obj->state != disabled)
 				obj->Press();
 		}
 		break;

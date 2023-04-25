@@ -4,12 +4,12 @@ Display* display = { };
 Display* Display::p_instance = nullptr;
 HINSTANCE hMainInst = { };
 
-STATIC* st11, * st12, * st21, * st22;
-BUTTON* bt11, * bt12, * bt21, * bt22;
+STATIC *st11, *st12, *st21, *st22;
+BUTTON *bt11, *bt12, *bt21, *bt22;
 
 int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
 {
-	Register();
+	InitLib();
 
 	hMainInst = hInst;
 	display = Display::GetInstance(V3{1665, 900, 0});
@@ -65,13 +65,15 @@ void Display::OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	stp.alignh = haligns::center;
 	stp.alignv = valigns::top;
 
-	st11 = new STATIC(hWnd, "Выберите файл...", V3{ 10, 10, 0 }, ST11, V3{400, 720, 3}, stp); stp.textCol = V3(203, 30, 30);
-	st12 = new STATIC(hWnd, "Файл не выбран!", V3{ 10 + 400 + 10, 10, 0 }, ST12, V3{400, 720, 3}, stp); stp.textCol = STATIC_DEFAULT_TEXTCOL;
-	st21 = new STATIC(hWnd, "Выберите файл...", V3{ r.right - 10 - 400 - 10 - 400, 10, 0 }, ST21, V3{ 400, 720, 3 }, stp); stp.textCol = V3(203, 30, 30);
-	st22 = new STATIC(hWnd, "Файл не выбран!", V3{ r.right - 10 - 400, 10, 0 }, ST22, V3{ 400, 720, 3 }, stp);
+	st11 = new STATIC(hWnd, "Выберите файл...", V3{ 10, 10, 0 }, ST11, V3{400, 780, 3}, stp); stp.textCol = V3(203, 30, 30);
+	st12 = new STATIC(hWnd, "Файл не выбран!", V3{ 10 + 400 + 10, 10, 0 }, ST12, V3{400, 780, 3}, stp); stp.textCol = STATIC_DEFAULT_TEXTCOL;
+	st21 = new STATIC(hWnd, "Выберите файл...", V3{ r.right - 10 - 400 - 10 - 400, 10, 0 }, ST21, V3{ 400, 780, 3 }, stp); stp.textCol = V3(203, 30, 30);
+	st22 = new STATIC(hWnd, "Файл не выбран!", V3{ r.right - 10 - 400, 10, 0 }, ST22, V3{ 400, 780, 3 }, stp);
 
-	//bt11 = new BUTTON(hWnd, "Открыть", );
-
+	bt11 = new BUTTON(hWnd, "Открыть", V3{10, r.bottom - 60, 0}, BT11, V3{400, 50, 3});
+	bt12 = new BUTTON(hWnd, "Вычислить", V3{ 10 + 400 + 10, r.bottom - 60, 0 }, BT12, V3{ 400, 50, 3 }); bt12->Disable();
+	bt21 = new BUTTON(hWnd, "Открыть", V3{ r.right - 10 - 400 - 10 - 400, r.bottom - 60, 0 }, BT21, V3{ 400, 50, 3 });
+	bt22 = new BUTTON(hWnd, "Вычислить", V3{ r.right - 10 - 400, r.bottom - 60, 0 }, BT22, V3{ 400, 50, 3 }); bt22->Disable();
 }
 
 void Display::OnResize(HWND hWnd, WPARAM wParam, LPARAM lParam)
@@ -83,7 +85,18 @@ void Display::CommandHandler(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
 	switch (wParam)
 	{
-		
+		case BT11: 
+			
+			break;
+		case BT12:
+
+			break;
+		case BT21: 
+			
+			break;
+		case BT22:
+
+			break;
 	}
 }
 

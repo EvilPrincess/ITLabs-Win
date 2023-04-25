@@ -91,12 +91,14 @@ void Display::CommandHandler(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	{
 		case BT11: 
 			
+			bt12->Enable();
 			break;
 		case BT12:
 
 			break;
 		case BT21: 
 			
+			bt22->Enable();
 			break;
 		case BT22:
 

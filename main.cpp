@@ -107,6 +107,7 @@ void OnOpenPressed1()
 		fclose(file);
 		st11->SetAlignH(haligns::left);
 		st11->SetText("Предпросмотр файла:\n\n" + string(buffer1));
+		bt12->Enable();
 	}
 }
 void OnOpenPressed2()

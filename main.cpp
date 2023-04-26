@@ -132,11 +132,22 @@ void OnOpenPressed2()
 }
 void OnSolvePressed1()
 {
-
+	vector<char> uniq;
+	for (char c : buffer1)
+	{
+		if (find(uniq.begin(), uniq.end(), c) == uniq.end()) uniq.push_back(c);
+	}
+	st12->params.textCol = STATIC_DEFAULT_TEXTCOL;
+	st12->SetAlignH(haligns::left);
+	st12->SetText("Уникальные символы файла:\n\n" + string(uniq.begin(), uniq.end()));
 }
 void OnSolvePressed2()
 {
-
+	string text = st21->GetText();
+	st21->SetText("Предпросмотр выбранного текста:\n\n" +
+		(text = string(find(text.begin() +
+			string("Предпросмотр выбранного текста:\n\n").length(), text.end(), ' ') + 1,
+			text.end())));
 }
 BOOL OpenDialog(HWND hwnd, LPSTR lpFileName, LPSTR lpTitleName)
 {
@@ -173,14 +184,7 @@ void Display::CommandHandler(HWND hWnd, WPARAM wParam, LPARAM lParam)
 		// вычислить номер 1
 		case BT12:
 		{
-			vector<char> uniq;
-			for (char c : buffer1)
-			{
-				if (find(uniq.begin(), uniq.end(), c) == uniq.end()) uniq.push_back(c);
-			}
-			st12->params.textCol = STATIC_DEFAULT_TEXTCOL;
-			st12->SetAlignH(haligns::left);
-			st12->SetText("Уникальные символы файла:\n\n" + string(uniq.begin(), uniq.end()));
+			OnSolvePressed1();
 			break;
 		}
 		// открыть номер 2
@@ -192,11 +196,7 @@ void Display::CommandHandler(HWND hWnd, WPARAM wParam, LPARAM lParam)
 		// вычислить номер 2
 		case BT22:
 		{
-			string text = st21->GetText();
-			st21->SetText("Предпросмотр выбранного текста:\n\n" + 
-				(text = string(find(text.begin() + 
-					string("Предпросмотр выбранного текста:\n\n").length(), text.end(), ' ') + 1, 
-					text.end())));
+			OnSolvePressed2();
 			break;
 		}
 	}

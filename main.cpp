@@ -94,17 +94,11 @@ void OnOpenPressed1()
 {
 	CHAR fileName[MAX_PATH] = "";	// эта штука содержит путь к файлу вместе с его именем
 	CHAR titleName[MAX_PATH] = "";
-	if (OpenDialog(NULL, fileName, titleName, 0))
+	if (OpenDialog(NULL, fileName, titleName))
 	{
-		FILE* file = fopen(fileName, "r");
-		if (file == nullptr) 
-		{
-			MB("Ошибка чтения файла!", 1);
-			return;
-		}
-		DWORD fileSize = ftell(file);
-		fread(buffer1, sizeof(buffer1), 1, file);
-		fclose(file);
+		ifstream file(fileName);
+		file.read(buffer1, sizeof(buffer1));
+		file.close();
 		st11->SetAlignH(aligns::left);
 		st11->SetText("Предпросмотр файла:\n\n" + string(buffer1));
 		bt12->Enable();
@@ -132,14 +126,25 @@ void OnOpenPressed2()
 }
 void OnSolvePressed1()
 {
-	vector<char> uniq;
-	for (char c : buffer1)
+	CHAR fileName[MAX_PATH] = "";	// эта штука содержит путь к файлу вместе с его именем
+	CHAR titleName[MAX_PATH] = "";
+	if (OpenDialog(NULL, fileName, titleName, 0))
 	{
-		if (find(uniq.begin(), uniq.end(), c) == uniq.end()) uniq.push_back(c);
+		// расчеты и вывод
+		vector<char> uniq;
+		string result;
+		for (char c : buffer1)
+		{
+			if (find(uniq.begin(), uniq.end(), c) == uniq.end()) uniq.push_back(c);
+		}
+		st12->params.textCol = STATIC_DEFAULT_TEXTCOL;
+		st12->SetAlignH(aligns::left);
+		st12->SetText("Уникальные символы файла:\n\n" + (result = string(uniq.begin(), uniq.end())));
+		// изменение файла
+		ofstream file(fileName, ios_base::trunc);
+		file << result << endl;
+		file.close();
 	}
-	st12->params.textCol = STATIC_DEFAULT_TEXTCOL;
-	st12->SetAlignH(aligns::left);
-	st12->SetText("Уникальные символы файла:\n\n" + string(uniq.begin(), uniq.end()));
 }
 void OnSolvePressed2()
 {

@@ -16,6 +16,12 @@
 #define BT21 121
 #define BT22 122
 
+void OnOpenPressed1();
+void OnOpenPressed2();
+void OnSolvePressed1();
+void OnSolvePressed2();
+BOOL OpenDialog(HWND hwnd, LPSTR lpFileName, LPSTR lpTitleName);
+
 //#ifndef REFRESH_RATE
 //HDC hDCScreen = GetDC(NULL);
 //const int frq = GetDeviceCaps(hDCScreen, VREFRESH);

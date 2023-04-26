@@ -20,7 +20,8 @@ void OnOpenPressed1();
 void OnOpenPressed2();
 void OnSolvePressed1();
 void OnSolvePressed2();
-BOOL OpenDialog(HWND hwnd, LPSTR lpFileName, LPSTR lpTitleName);
+BOOL OpenDialog(HWND hwnd, LPSTR lpFileName, 
+	LPSTR lpTitleName, BOOL openOrSave = 1);  // 1 is open
 
 //#ifndef REFRESH_RATE
 //HDC hDCScreen = GetDC(NULL);

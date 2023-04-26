@@ -94,7 +94,7 @@ void OnOpenPressed1()
 {
 	CHAR fileName[MAX_PATH] = "";	// эта штука содержит путь к файлу вместе с его именем
 	CHAR titleName[MAX_PATH] = "";
-	if (OpenDialog(NULL, fileName, titleName))
+	if (OpenDialog(NULL, fileName, titleName, 0))
 	{
 		FILE* file = fopen(fileName, "r");
 		if (file == nullptr) 
@@ -149,7 +149,7 @@ void OnSolvePressed2()
 			string("Предпросмотр выбранного текста:\n\n").length(), text.end(), ' ') + 1,
 			text.end())));
 }
-BOOL OpenDialog(HWND hwnd, LPSTR lpFileName, LPSTR lpTitleName)
+BOOL OpenDialog(HWND hwnd, LPSTR lpFileName, LPSTR lpTitleName, BOOL openOrSave)
 {
 	OPENFILENAMEA ofn;
 	CHAR szFile[MAX_PATH] = "";
@@ -161,14 +161,26 @@ BOOL OpenDialog(HWND hwnd, LPSTR lpFileName, LPSTR lpTitleName)
 	ofn.lpstrFile = szFile;
 	ofn.nMaxFile = MAX_PATH;
 	ofn.lpstrTitle = lpTitleName;
-	ofn.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;
+	ofn.Flags = (openOrSave? OFN_FILEMUSTEXIST : 0) | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;
 	// Вызов диалога выбора файла
-	if (GetOpenFileNameA(&ofn))
+	if (openOrSave)
 	{
-		strncpy(lpFileName, szFile, strlen(szFile) + 1);
-		return TRUE;
+		if (GetOpenFileNameA(&ofn))
+		{
+			strncpy(lpFileName, szFile, strlen(szFile) + 1);
+			return TRUE;
+		}
+		return FALSE;
 	}
-	return FALSE;
+	else
+	{
+		if (GetSaveFileNameA(&ofn))
+		{
+			strncpy(lpFileName, szFile, strlen(szFile) + 1);
+			return TRUE;
+		}
+		return FALSE;
+	}
 }
 
 void Display::CommandHandler(HWND hWnd, WPARAM wParam, LPARAM lParam)

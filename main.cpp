@@ -66,13 +66,15 @@ void Display::OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	STATICPARAMS stp;
 	stp.alignh = haligns::center;
 	stp.alignv = valigns::top;
-	stp.bdDefCol = BUTTON_DEFAULT_BDC + 60;
+	stp.bdDefCol = BUTTON_DEFAULT_BDC - 40;
+	stp.textCol = V3(255, 95, 46);
 
-	new STATIC(hWnd, "Лабораторная работа №6", V3(10, 10, 0), NULL, V3{1630, 35, 4}, stp);
+	new STATIC(hWnd, "Лабораторная работа №6", V3(10, 10, 0), NULL, V3{1630, 35, 3}, stp);
 	new STATIC(hWnd, "Задача №1", V3(10, 10 + 30 + 10, 0), NULL, V3{810, 35, 3}, stp);
 	new STATIC(hWnd, "Задача №2", V3(r.right - 820, 10 + 30 + 10, 0), NULL, V3{810, 35, 3}, stp);
 
 	stp.bdDefCol = STATIC_DEFAULT_BORDER;
+	stp.textCol = STATIC_DEFAULT_TEXTCOL;
 	st11 = new STATIC(hWnd, "Выберите файл...", V3{ 10, 10 + 70 + 10, 0 }, ST11, V3{400, 700, 3}, stp); stp.textCol = V3(203, 30, 30);
 	st12 = new STATIC(hWnd, "Файл не выбран!", V3{ 10 + 400 + 10, 10 + 70 + 10, 0 }, ST12, V3{400, 700, 3}, stp); stp.textCol = STATIC_DEFAULT_TEXTCOL;
 	st21 = new STATIC(hWnd, "Выберите файл...", V3{ r.right - 10 - 400 - 10 - 400, 10 + 70 + 10, 0 }, ST21, V3{ 810, 700, 3 }, stp); stp.textCol = V3(203, 30, 30);

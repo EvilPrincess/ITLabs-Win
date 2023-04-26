@@ -204,7 +204,11 @@ void Display::CommandHandler(HWND hWnd, WPARAM wParam, LPARAM lParam)
 		// вычислить номер 2
 		case BT22:
 		{
-			
+			string text = st21->GetText();
+			st21->SetText("Предпросмотр выбранного текста:\n\n" + 
+				(text = string(find(text.begin() + 
+					string("Предпросмотр выбранного текста:\n\n").length(), text.end(), ' ') + 1, 
+					text.end())));
 			break;
 		}
 	}

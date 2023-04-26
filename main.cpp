@@ -110,15 +110,9 @@ void OnOpenPressed2()
 	CHAR titleName[MAX_PATH] = "";
 	if (OpenDialog(NULL, fileName, titleName))
 	{
-		FILE* file = fopen(fileName, "r");
-		if (file == nullptr)
-		{
-			MB("Ошибка чтения файла!", 1);
-			return;
-		}
-		DWORD fileSize = ftell(file);
-		fread(buffer2, sizeof(buffer2), 1, file);
-		fclose(file);
+		ifstream file(fileName);
+		file.read(buffer2, sizeof(buffer2));
+		file.close();
 		st21->SetAlignH(aligns::left);
 		st21->SetText("Предпросмотр файла:\n\n" + string(buffer2));
 		bt22->Enable();
@@ -153,6 +147,7 @@ void OnSolvePressed2()
 		(text = string(find(text.begin() +
 			string("Предпросмотр выбранного текста:\n\n").length(), text.end(), ' ') + 1,
 			text.end())));
+
 }
 BOOL OpenDialog(HWND hwnd, LPSTR lpFileName, LPSTR lpTitleName, BOOL openOrSave)
 {

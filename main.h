@@ -16,6 +16,7 @@
 #define BT21 121
 #define BT22 122
 
+UINT FindLastSlash(string &_Str);
 void OnOpenPressed1();
 void OnOpenPressed2();
 void OnSolvePressed1();

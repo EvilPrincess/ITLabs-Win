@@ -25,6 +25,8 @@ WNDCLASS NewWindowClass(LPCWSTR Name, WNDPROC Procedure, HBRUSH BGColor, HCURSOR
 }
 void InitLib()
 {
+	
+
 	WNDCLASS wc = { };
 	RegisterClass(&(wc = NewWindowClass(EDIT_WC, Edit::EditProc, (HBRUSH)GetStockObject(HOLLOW_BRUSH))));
 	RegisterClass(&(wc = NewWindowClass(BUTTON_WC, Button::ButtonProc, (HBRUSH)GetStockObject(HOLLOW_BRUSH))));

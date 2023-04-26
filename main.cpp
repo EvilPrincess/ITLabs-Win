@@ -4,7 +4,7 @@ Display* display = { };
 Display* Display::p_instance = nullptr;
 HINSTANCE hMainInst = { };
 
-STATIC *st11, *st12, *st21;
+STATIC *st11, *st12, *st21, *dir1, *dir2, *dir3;
 BUTTON *bt11, *bt12, *bt21, *bt22;
 HANDLE file1, file2;
 char buffer1[16384], buffer2[16384];
@@ -75,9 +75,16 @@ void Display::OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 
 	stp.bdDefCol = STATIC_DEFAULT_BORDER;
 	stp.textCol = STATIC_DEFAULT_TEXTCOL;
-	st11 = new STATIC(hWnd, "Выберите файл...", V3{ 10, 10 + 70 + 10, 0 }, ST11, V3{400, 700, 3}, stp); stp.textCol = V3(203, 30, 30);
-	st12 = new STATIC(hWnd, "Файл не выбран!", V3{ 10 + 400 + 10, 10 + 70 + 10, 0 }, ST12, V3{400, 700, 3}, stp); stp.textCol = STATIC_DEFAULT_TEXTCOL;
-	st21 = new STATIC(hWnd, "Выберите файл...", V3{ r.right - 10 - 400 - 10 - 400, 10 + 70 + 10, 0 }, ST21, V3{ 810, 700, 3 }, stp); stp.textCol = V3(203, 30, 30);
+	st11 = new STATIC(hWnd, "Выберите файл...", V3{ 10, 10 + 70 + 10, 0 }, ST11, V3{400, 670, 3}, stp); stp.textCol = V3(203, 30, 30);
+	st12 = new STATIC(hWnd, "Файл не выбран!", V3{ 10 + 400 + 10, 10 + 70 + 10, 0 }, ST12, V3{400, 670, 3}, stp); stp.textCol = STATIC_DEFAULT_TEXTCOL;
+	st21 = new STATIC(hWnd, "Выберите файл...", V3{ r.right - 10 - 400 - 10 - 400, 10 + 70 + 10, 0 }, ST21, V3{ 810, 670, 3 }, stp); stp.textCol = V3(203, 30, 30);
+
+	stp.bdDefCol = BUTTON_DEFAULT_BDC - 40;
+	stp.textCol = STATIC_DEFAULT_TEXTCOL;
+	stp.charHeight = 18;
+	dir1 = new STATIC(hWnd, "", V3{10, r.bottom - 60 - 10 - 25, 0}, NULL, V3{400, 30, 3}, stp);
+	dir2 = new STATIC(hWnd, "", V3{10 + 400 + 10, r.bottom - 60 - 10 - 25, 0}, NULL, V3{400, 30, 3}, stp);
+	dir3 = new STATIC(hWnd, "", V3{10 + 400 + 10 + 400 + 10, r.bottom - 60 - 10 - 25, 0}, NULL, V3{810, 30, 3}, stp);
 
 	bt11 = new BUTTON(hWnd, "Открыть", V3{10, r.bottom - 60, 0}, BT11, V3{400, 50, 3});
 	bt12 = new BUTTON(hWnd, "Найти уникальные", V3{ 10 + 400 + 10, r.bottom - 60, 0 }, BT12, V3{ 400, 50, 3 }); bt12->Disable();
@@ -88,6 +95,14 @@ void Display::OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 void Display::OnResize(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
 
+}
+
+UINT FindLastSlash(string &_Str)
+{
+	for (int i = _Str.length()-1; i > 0; i--)
+	{
+		if (_Str[i] == '/') return i;
+	}
 }
 
 void OnOpenPressed1()
@@ -102,6 +117,7 @@ void OnOpenPressed1()
 		st11->SetAlignH(aligns::left);
 		st11->SetText("Предпросмотр файла:\n\n" + string(buffer1));
 		bt12->Enable();
+		dir1->SetText(fileName);
 	}
 }
 void OnOpenPressed2()
@@ -116,6 +132,7 @@ void OnOpenPressed2()
 		st21->SetAlignH(aligns::left);
 		st21->SetText("Предпросмотр файла:\n\n" + string(buffer2));
 		bt22->Enable();
+		dir3->SetText(fileName);
 	}
 }
 void OnSolvePressed1()
@@ -138,16 +155,19 @@ void OnSolvePressed1()
 		ofstream file(fileName, ios_base::trunc);
 		file << result << endl;
 		file.close();
+		dir2->SetText(fileName);
 	}
 }
 void OnSolvePressed2()
 {
-	string text = st21->GetText();
+	string result = st21->GetText();
 	st21->SetText("Предпросмотр выбранного текста:\n\n" +
-		(text = string(find(text.begin() +
-			string("Предпросмотр выбранного текста:\n\n").length(), text.end(), ' ') + 1,
-			text.end())));
-
+		(result = string(find(result.begin() +
+			string("Предпросмотр выбранного текста:\n\n").length(), result.end(), ' ') + 1,
+			result.end())));
+	ofstream file(dir3->GetText(), ios_base::trunc);
+	file << result << endl;
+	file.close();
 }
 BOOL OpenDialog(HWND hwnd, LPSTR lpFileName, LPSTR lpTitleName, BOOL openOrSave)
 {

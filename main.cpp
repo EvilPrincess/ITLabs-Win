@@ -112,7 +112,23 @@ void OnOpenPressed1()
 }
 void OnOpenPressed2()
 {
-
+	CHAR fileName[MAX_PATH] = "";	// эта штука содержит путь к файлу вместе с его именем
+	CHAR titleName[MAX_PATH] = "";
+	if (OpenDialog(NULL, fileName, titleName))
+	{
+		FILE* file = fopen(fileName, "r");
+		if (file == nullptr)
+		{
+			MB("Ошибка чтения файла!", 1);
+			return;
+		}
+		DWORD fileSize = ftell(file);
+		fread(buffer2, sizeof(buffer2), 1, file);
+		fclose(file);
+		st21->SetAlignH(haligns::left);
+		st21->SetText("Предпросмотр файла:\n\n" + string(buffer2));
+		bt22->Enable();
+	}
 }
 void OnSolvePressed1()
 {
@@ -170,7 +186,7 @@ void Display::CommandHandler(HWND hWnd, WPARAM wParam, LPARAM lParam)
 		// открыть номер 2
 		case BT21: 
 		{
-			
+			OnOpenPressed2();
 			break;
 		}
 		// вычислить номер 2

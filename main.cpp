@@ -4,7 +4,7 @@ Display* display = { };
 Display* Display::p_instance = nullptr;
 HINSTANCE hMainInst = { };
 
-STATIC *st11, *st12, *st21, *st22;
+STATIC *st11, *st12, *st21;
 BUTTON *bt11, *bt12, *bt21, *bt22;
 HANDLE file1, file2;
 char buffer1[16384], buffer2[16384];
@@ -75,8 +75,7 @@ void Display::OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	stp.bdDefCol = STATIC_DEFAULT_BORDER;
 	st11 = new STATIC(hWnd, "Выберите файл...", V3{ 10, 10 + 70 + 10, 0 }, ST11, V3{400, 700, 3}, stp); stp.textCol = V3(203, 30, 30);
 	st12 = new STATIC(hWnd, "Файл не выбран!", V3{ 10 + 400 + 10, 10 + 70 + 10, 0 }, ST12, V3{400, 700, 3}, stp); stp.textCol = STATIC_DEFAULT_TEXTCOL;
-	st21 = new STATIC(hWnd, "Выберите файл...", V3{ r.right - 10 - 400 - 10 - 400, 10 + 70 + 10, 0 }, ST21, V3{ 400, 700, 3 }, stp); stp.textCol = V3(203, 30, 30);
-	st22 = new STATIC(hWnd, "Файл не выбран!", V3{ r.right - 10 - 400, 10 + 70 + 10, 0 }, ST22, V3{ 400, 700, 3 }, stp);
+	st21 = new STATIC(hWnd, "Выберите файл...", V3{ r.right - 10 - 400 - 10 - 400, 10 + 70 + 10, 0 }, ST21, V3{ 810, 700, 3 }, stp); stp.textCol = V3(203, 30, 30);
 
 	bt11 = new BUTTON(hWnd, "Открыть", V3{10, r.bottom - 60, 0}, BT11, V3{400, 50, 3});
 	bt12 = new BUTTON(hWnd, "Вычислить", V3{ 10 + 400 + 10, r.bottom - 60, 0 }, BT12, V3{ 400, 50, 3 }); bt12->Disable();
@@ -250,7 +249,7 @@ HWND Display::GenWnd(const V3 _Size)
 {
 	wnd = CreateWindow(DISPLAY_WC, L"My Windows Test Program",
 		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_CLIPCHILDREN |
-		WS_MINIMIZEBOX | WS_VISIBLE, 100, 100, _Size.x, _Size.y, NULL, NULL, NULL, NULL);
+		WS_MINIMIZEBOX | WS_VISIBLE, 10, 10, _Size.x, _Size.y, NULL, NULL, NULL, NULL);
 	return wnd;
 }
 

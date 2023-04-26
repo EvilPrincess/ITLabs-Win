@@ -11,7 +11,6 @@
 #define ST11 11
 #define ST12 12
 #define ST21 21
-#define ST22 22
 #define BT11 111
 #define BT12 112
 #define BT21 121

@@ -14,8 +14,8 @@
 struct STATICPARAMS
 {
 	UINT bdWidth = 3;
-	valigns alignv = valigns::center;
-	haligns alignh = haligns::center;
+	aligns alignv = aligns::center;
+	aligns alignh = aligns::center;
 	INT charHeight = 0;
 	V3 bdDefCol = STATIC_DEFAULT_BORDER;
 	V3 bkCol = STATIC_DEFAULT_BKGND;
@@ -64,8 +64,8 @@ public:
 	void Enable();
 	void Show();
 	void Hide();
-	void SetAlignV(valigns _Al);
-	void SetAlignH(haligns _Al);
+	void SetAlignV(aligns _Al);
+	void SetAlignH(aligns _Al);
 
 	// public static methods
 	static LRESULT CALLBACK StaticProc(HWND, UINT, WPARAM, LPARAM);

@@ -23,8 +23,8 @@ void Static::GenWnd(HWND _hParWnd)
 	wnd = CreateWindow(STATIC_WC, L"name", WS_CHILD | WS_VISIBLE,
 		transform.position.x, transform.position.y, transform.size.x, transform.size.y, _hParWnd, NULL, NULL, NULL);
 	placeholder = CreateWindowA("static", text.c_str(), WS_CHILD | WS_VISIBLE |
-		(params.alignh == haligns::center ? SS_CENTER : params.alignh == haligns::left ? SS_LEFT : SS_RIGHT) |
-		(params.alignv == valigns::center ? BS_CENTER : params.alignv == valigns::top ? BS_TOP : BS_BOTTOM),
+		(params.alignh == aligns::center ? SS_CENTER : params.alignh == aligns::left ? SS_LEFT : SS_RIGHT) |
+		(params.alignv == aligns::center ? BS_CENTER : params.alignv == aligns::top ? BS_TOP : BS_BOTTOM),
 		7, 7, transform.size.x - 14, transform.size.y - 14, wnd, NULL, NULL, NULL);
 	defaultStaticProc_LIBVAR = (WNDPROC)GetWindowLongPtrA(placeholder, GWLP_WNDPROC);
 	SetWindowLongPtrA(placeholder, GWLP_WNDPROC, (LONG_PTR)PlaceholderProc);
@@ -35,8 +35,8 @@ void Static::GenWnd(HWND _hParWnd)
 void Static::UpdateAligning()
 {
 	SetWindowLongA(placeholder, GWL_STYLE, WS_CHILD | WS_VISIBLE |
-		(params.alignh == haligns::center ? SS_CENTER : params.alignh == haligns::left ? SS_LEFT : SS_RIGHT) |
-		(params.alignv == valigns::center ? BS_CENTER : params.alignv == valigns::top ? BS_TOP : BS_BOTTOM));
+		(params.alignh == aligns::center ? SS_CENTER : params.alignh == aligns::left ? SS_LEFT : SS_RIGHT) |
+		(params.alignv == aligns::center ? BS_CENTER : params.alignv == aligns::top ? BS_TOP : BS_BOTTOM));
 	InvalidateRect(placeholder, NULL, TRUE);
 }
 
@@ -129,12 +129,12 @@ void Static::Redraw()
 	DeleteObject(oldp);
 	DeleteObject(oldb);
 }
-void Static::SetAlignV(valigns _Al)
+void Static::SetAlignV(aligns _Al)
 {
 	params.alignv = _Al;
 	UpdateAligning();
 }
-void Static::SetAlignH(haligns _Al)
+void Static::SetAlignH(aligns _Al)
 {
 	params.alignh = _Al;
 	UpdateAligning();

@@ -3,8 +3,7 @@
 #define vRGB(v) RGB(v.x, v.y, v.z)
 
 enum states { hovered, pressed, enabled, disabled, valid, invalid };
-enum class haligns { left, center, right };
-enum class valigns { top, center, bottom };
+enum class aligns { left, center, right, top, bottom};
 
 //#define LIGHT_THEME
 

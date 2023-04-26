@@ -27,8 +27,8 @@
 struct BUTTONPARAMS
 {
 	UINT bdWidth = 3;
-	valigns alignv = valigns::center;
-	haligns alignh = haligns::center;
+	aligns alignv = aligns::center;
+	aligns alignh = aligns::center;
 	states startstate = enabled;
 	INT charHeight = 0;
 	V3 bdDefCol = BUTTON_DEFAULT_BDC;

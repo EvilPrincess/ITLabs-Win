@@ -64,8 +64,8 @@ void Display::OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	// лаба 6 - интерфейс
 
 	STATICPARAMS stp;
-	stp.alignh = haligns::center;
-	stp.alignv = valigns::top;
+	stp.alignh = aligns::center;
+	stp.alignv = aligns::top;
 	stp.bdDefCol = BUTTON_DEFAULT_BDC - 40;
 	stp.textCol = V3(255, 95, 46);
 
@@ -105,7 +105,7 @@ void OnOpenPressed1()
 		DWORD fileSize = ftell(file);
 		fread(buffer1, sizeof(buffer1), 1, file);
 		fclose(file);
-		st11->SetAlignH(haligns::left);
+		st11->SetAlignH(aligns::left);
 		st11->SetText("Предпросмотр файла:\n\n" + string(buffer1));
 		bt12->Enable();
 	}
@@ -125,7 +125,7 @@ void OnOpenPressed2()
 		DWORD fileSize = ftell(file);
 		fread(buffer2, sizeof(buffer2), 1, file);
 		fclose(file);
-		st21->SetAlignH(haligns::left);
+		st21->SetAlignH(aligns::left);
 		st21->SetText("Предпросмотр файла:\n\n" + string(buffer2));
 		bt22->Enable();
 	}
@@ -138,7 +138,7 @@ void OnSolvePressed1()
 		if (find(uniq.begin(), uniq.end(), c) == uniq.end()) uniq.push_back(c);
 	}
 	st12->params.textCol = STATIC_DEFAULT_TEXTCOL;
-	st12->SetAlignH(haligns::left);
+	st12->SetAlignH(aligns::left);
 	st12->SetText("Уникальные символы файла:\n\n" + string(uniq.begin(), uniq.end()));
 }
 void OnSolvePressed2()

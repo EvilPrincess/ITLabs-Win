@@ -114,6 +114,11 @@ void OnOpenPressed1()
 		ifstream file(fileName);
 		file.read(buffer1, sizeof(buffer1));
 		file.close();
+		if (string(buffer1) == "")
+		{
+			MB("Пустой файл!", 1);
+			return;
+		}
 		st11->SetAlignH(aligns::left);
 		st11->SetText("Предпросмотр файла:\n\n" + string(buffer1));
 		bt12->Enable();
@@ -129,6 +134,11 @@ void OnOpenPressed2()
 		ifstream file(fileName);
 		file.read(buffer2, sizeof(buffer2));
 		file.close();
+		if (string(buffer2) == "")
+		{
+			MB("Пустой файл!", 1);
+			return;
+		}
 		st21->SetAlignH(aligns::left);
 		st21->SetText("Предпросмотр файла:\n\n" + string(buffer2));
 		bt22->Enable();

@@ -111,6 +111,7 @@ void OnOpenPressed1()
 	CHAR titleName[MAX_PATH] = "";
 	if (OpenDialog(NULL, fileName, titleName))
 	{
+		fill_n(buffer1, sizeof(buffer1), 0);
 		ifstream file(fileName);
 		file.read(buffer1, sizeof(buffer1));
 		file.close();
@@ -131,6 +132,7 @@ void OnOpenPressed2()
 	CHAR titleName[MAX_PATH] = "";
 	if (OpenDialog(NULL, fileName, titleName))
 	{
+		fill_n(buffer2, sizeof(buffer2), 0);
 		ifstream file(fileName);
 		file.read(buffer2, sizeof(buffer2));
 		file.close();
@@ -154,7 +156,7 @@ void OnSolvePressed1()
 		// расчеты и вывод
 		vector<char> uniq;
 		string result;
-		for (char c : buffer1)
+		for (char c : st12->GetText())
 		{
 			if (find(uniq.begin(), uniq.end(), c) == uniq.end()) uniq.push_back(c);
 		}

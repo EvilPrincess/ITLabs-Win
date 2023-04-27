@@ -156,8 +156,10 @@ void OnSolvePressed1()
 		// расчеты и вывод
 		vector<char> uniq;
 		string result;
-		for (char c : st12->GetText())
+		int toskip = string("Предпросмотр файла:\n\n").length();
+		for (char c : st11->GetText())
 		{
+			if (toskip-- > 0) continue;
 			if (find(uniq.begin(), uniq.end(), c) == uniq.end()) uniq.push_back(c);
 		}
 		st12->params.textCol = STATIC_DEFAULT_TEXTCOL;

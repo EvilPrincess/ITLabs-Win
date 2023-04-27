@@ -210,9 +210,9 @@ BOOL OpenDialog(HWND hwnd, LPSTR lpFileName, LPSTR lpTitleName, BOOL openOrSave)
 	{
 		if (GetSaveFileNameA(&ofn))
 		{
-			strcat_s(szFile, ".txt");
 			if (string(szFile).substr(string(szFile).length()-5, 4) == ".txt")
-				strncpy(lpFileName, szFile, strlen(szFile) + 1);
+				strcat_s(szFile, ".txt");
+			strncpy(lpFileName, szFile, strlen(szFile) + 1);
 			return TRUE;
 		}
 		return FALSE;

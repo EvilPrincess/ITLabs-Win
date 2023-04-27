@@ -174,11 +174,16 @@ void OnSolvePressed1()
 }
 void OnSolvePressed2()
 {
-	string result = st21->GetText();
-	st21->SetText("Предпросмотр выбранного текста:\n\n" +
-		(result = string(find(result.begin() +
-			string("Предпросмотр выбранного текста:\n\n").length(), result.end(), ' ') + 1,
-			result.end())));
+	int toskip = string("Предпросмотр файла:\n\n").length();
+	string result = "";
+	for (char c : st21->GetText())
+	{
+		if (toskip-- > 0) continue;
+		result += c;
+	}
+	result = string(find(result.begin(), result.end(), ' ')+1, result.end());
+	st21->SetText("Предпросмотр файла:\n\n");
+	st21->AddText(result);
 	ofstream file(dir3->GetText(), ios_base::trunc);
 	file << result << endl;
 	file.close();

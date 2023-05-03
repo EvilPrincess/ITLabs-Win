@@ -4,10 +4,6 @@ Display* display = { };
 Display* Display::p_instance = nullptr;
 HINSTANCE hMainInst = { };
 
-STATIC *st11, *st12, *st21, *dir1, *dir2, *dir3;
-BUTTON *bt11, *bt12, *bt21, *bt22;
-HANDLE file1, file2;
-char buffer1[16384], buffer2[16384];
 
 int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
 {
@@ -61,35 +57,9 @@ void Display::OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	RECT r;
 	GetClientRect(hWnd, &r);
 	
-	// лаба 6 - интерфейс
+	// лаба 7 - интерфейс
 
-	STATICPARAMS stp;
-	stp.alignh = aligns::center;
-	stp.alignv = aligns::top;
-	stp.bdDefCol = BUTTON_DEFAULT_BDC - 40;
-	stp.textCol = V3(255, 95, 46);
-
-	new STATIC(hWnd, "Лабораторная работа №6", V3(10, 10, 0), NULL, V3{1630, 35, 3}, stp);
-	new STATIC(hWnd, "Задача №1", V3(10, 10 + 30 + 10, 0), NULL, V3{810, 35, 3}, stp);
-	new STATIC(hWnd, "Задача №2", V3(r.right - 820, 10 + 30 + 10, 0), NULL, V3{810, 35, 3}, stp);
-
-	stp.bdDefCol = STATIC_DEFAULT_BORDER;
-	stp.textCol = STATIC_DEFAULT_TEXTCOL;
-	st11 = new STATIC(hWnd, "Выберите файл...", V3{ 10, 10 + 70 + 10, 0 }, ST11, V3{400, 670, 3}, stp); stp.textCol = V3(203, 30, 30);
-	st12 = new STATIC(hWnd, "Файл не выбран!", V3{ 10 + 400 + 10, 10 + 70 + 10, 0 }, ST12, V3{400, 670, 3}, stp); stp.textCol = STATIC_DEFAULT_TEXTCOL;
-	st21 = new STATIC(hWnd, "Выберите файл...", V3{ r.right - 10 - 400 - 10 - 400, 10 + 70 + 10, 0 }, ST21, V3{ 810, 670, 3 }, stp); stp.textCol = V3(203, 30, 30);
-
-	stp.bdDefCol = BUTTON_DEFAULT_BDC - 40;
-	stp.textCol = STATIC_DEFAULT_TEXTCOL;
-	stp.charHeight = 18;
-	dir1 = new STATIC(hWnd, "", V3{10, r.bottom - 60 - 10 - 25, 0}, NULL, V3{400, 30, 3}, stp);
-	dir2 = new STATIC(hWnd, "", V3{10 + 400 + 10, r.bottom - 60 - 10 - 25, 0}, NULL, V3{400, 30, 3}, stp);
-	dir3 = new STATIC(hWnd, "", V3{10 + 400 + 10 + 400 + 10, r.bottom - 60 - 10 - 25, 0}, NULL, V3{810, 30, 3}, stp);
-
-	bt11 = new BUTTON(hWnd, "Открыть", V3{10, r.bottom - 60, 0}, BT11, V3{400, 50, 3});
-	bt12 = new BUTTON(hWnd, "Найти уникальные", V3{ 10 + 400 + 10, r.bottom - 60, 0 }, BT12, V3{ 400, 50, 3 }); bt12->Disable();
-	bt21 = new BUTTON(hWnd, "Открыть", V3{ r.right - 10 - 400 - 10 - 400, r.bottom - 60, 0 }, BT21, V3{ 400, 50, 3 });
-	bt22 = new BUTTON(hWnd, "Удолить до пробела", V3{ r.right - 10 - 400, r.bottom - 60, 0 }, BT22, V3{ 400, 50, 3 }); bt22->Disable();
+	
 }
 
 void Display::OnResize(HWND hWnd, WPARAM wParam, LPARAM lParam)
@@ -97,162 +67,11 @@ void Display::OnResize(HWND hWnd, WPARAM wParam, LPARAM lParam)
 
 }
 
-UINT FindLastSlash(string &_Str)
-{
-	for (int i = _Str.length()-1; i > 0; i--)
-	{
-		if (_Str[i] == '/') return i;
-	}
-}
-
-void OnOpenPressed1()
-{
-	CHAR fileName[MAX_PATH] = "";	// эта штука содержит путь к файлу вместе с его именем
-	CHAR titleName[MAX_PATH] = "";
-	if (OpenDialog(NULL, fileName, titleName))
-	{
-		fill_n(buffer1, sizeof(buffer1), 0);
-		ifstream file(fileName);
-		file.read(buffer1, sizeof(buffer1));
-		file.close();
-		if (string(buffer1) == "")
-		{
-			MB("Пустой файл!", 1);
-			return;
-		}
-		st11->SetAlignH(aligns::left);
-		st11->SetText("Предпросмотр файла:\n\n" + string(buffer1));
-		bt12->Enable();
-		dir1->SetText(fileName);
-	}
-}
-void OnOpenPressed2()
-{
-	CHAR fileName[MAX_PATH] = "";	// эта штука содержит путь к файлу вместе с его именем
-	CHAR titleName[MAX_PATH] = "";
-	if (OpenDialog(NULL, fileName, titleName))
-	{
-		fill_n(buffer2, sizeof(buffer2), 0);
-		ifstream file(fileName);
-		file.read(buffer2, sizeof(buffer2));
-		file.close();
-		if (string(buffer2) == "")
-		{
-			MB("Пустой файл!", 1);
-			return;
-		}
-		st21->SetAlignH(aligns::left);
-		st21->SetText("Предпросмотр файла:\n\n" + string(buffer2));
-		bt22->Enable();
-		dir3->SetText(fileName);
-	}
-}
-void OnSolvePressed1()
-{
-	CHAR fileName[MAX_PATH] = "";	// эта штука содержит путь к файлу вместе с его именем
-	CHAR titleName[MAX_PATH] = "";
-	if (OpenDialog(NULL, fileName, titleName, 0))
-	{
-		// расчеты и вывод
-		vector<char> uniq;
-		string result;
-		int toskip = string("Предпросмотр файла:\n\n").length();
-		for (char c : st11->GetText())
-		{
-			if (toskip-- > 0) continue;
-			if (find(uniq.begin(), uniq.end(), c) == uniq.end()) uniq.push_back(c);
-		}
-		st12->params.textCol = STATIC_DEFAULT_TEXTCOL;
-		st12->SetAlignH(aligns::left);
-		st12->SetText("Уникальные символы файла:\n\n" + (result = string(uniq.begin(), uniq.end())));
-		// изменение файла
-		ofstream file(fileName, ios_base::trunc);
-		file << result << endl;
-		file.close();
-		dir2->SetText(fileName);
-	}
-}
-void OnSolvePressed2()
-{
-	int toskip = string("Предпросмотр файла:\n\n").length();
-	string result = "";
-	for (char c : st21->GetText())
-	{
-		if (toskip-- > 0) continue;
-		result += c;
-	}
-	result = string(find(result.begin(), result.end(), ' ')+1, result.end());
-	st21->SetText("Предпросмотр файла:\n\n");
-	st21->AddText(result);
-	ofstream file(dir3->GetText(), ios_base::trunc);
-	file << result << endl;
-	file.close();
-}
-BOOL OpenDialog(HWND hwnd, LPSTR lpFileName, LPSTR lpTitleName, BOOL openOrSave)
-{
-	OPENFILENAMEA ofn;
-	CHAR szFile[MAX_PATH] = "";
-	// Инициализация структуры OPENFILENAME
-	ZeroMemory(&ofn, sizeof(ofn));
-	ofn.lStructSize = sizeof(ofn);
-	ofn.hwndOwner = hwnd;
-	ofn.lpstrFilter = "Text Files (*.txt)\0*.txt\0";
-	ofn.lpstrFile = szFile;
-	ofn.nMaxFile = MAX_PATH;
-	ofn.lpstrTitle = lpTitleName;
-	ofn.Flags = (openOrSave? OFN_FILEMUSTEXIST : 0) | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;
-	// Вызов диалога выбора файла
-	if (openOrSave)
-	{
-		if (GetOpenFileNameA(&ofn))
-		{
-			strncpy(lpFileName, szFile, strlen(szFile) + 1);
-			return TRUE;
-		}
-		return FALSE;
-	}
-	else
-	{
-		if (GetSaveFileNameA(&ofn))
-		{
-			string str(szFile);
-			if (str.substr(str.length()-4, 4) != string(".txt"))
-				strcat_s(szFile, ".txt");
-			strncpy(lpFileName, szFile, strlen(szFile) + 1);
-			return TRUE;
-		}
-		return FALSE;
-	}
-}
-
 void Display::CommandHandler(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
 	switch (wParam)
 	{
-		// открыть номер 1
-		case BT11: 
-		{
-			OnOpenPressed1();
-			break;
-		}
-		// вычислить номер 1
-		case BT12:
-		{
-			OnSolvePressed1();
-			break;
-		}
-		// открыть номер 2
-		case BT21: 
-		{
-			OnOpenPressed2();
-			break;
-		}
-		// вычислить номер 2
-		case BT22:
-		{
-			OnSolvePressed2();
-			break;
-		}
+		
 	}
 }
 

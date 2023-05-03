@@ -7,22 +7,7 @@
 #define REFRESH_IDT 1
 #define REFRESH_RATE 1000 / 144
 
-// лаба 6 - »ƒс окон
-#define ST11 11
-#define ST12 12
-#define ST21 21
-#define BT11 111
-#define BT12 112
-#define BT21 121
-#define BT22 122
-
-UINT FindLastSlash(string &_Str);
-void OnOpenPressed1();
-void OnOpenPressed2();
-void OnSolvePressed1();
-void OnSolvePressed2();
-BOOL OpenDialog(HWND hwnd, LPSTR lpFileName, 
-	LPSTR lpTitleName, BOOL openOrSave = 1);  // 1 is open
+// лаба 7 - »ƒс окон
 
 //#ifndef REFRESH_RATE
 //HDC hDCScreen = GetDC(NULL);
